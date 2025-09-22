@@ -1,0 +1,189 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+    color: #213547;
+  }
+}
+
+/* Treatment color classes */
+.treatment-res {
+  background-color: #2563eb;
+}
+.treatment-odg {
+  background-color: #dc2626;
+}
+.treatment-otd {
+  background-color: #059669;
+}
+.treatment-pro {
+  background-color: #d97706;
+}
+.treatment-exo {
+  background-color: #7c3aed;
+}
+.treatment-end {
+  background-color: #db2777;
+}
+.treatment-pri {
+  background-color: #0891b2;
+}
+.treatment-exq {
+  background-color: #65a30d;
+}
+.treatment-otp {
+  background-color: #c2410c;
+}
+.treatment-odp {
+  background-color: #7c2d12;
+}
+.treatment-per {
+  background-color: #be185d;
+}
+.treatment-imp {
+  background-color: #1e40af;
+}
+.treatment-prd {
+  background-color: #0f766e;
+}
+.treatment-odq {
+  background-color: #991b1b;
+}
+.treatment-dud {
+  background-color: #6b7280;
+}
+.treatment-rtr {
+  background-color: #374151;
+}
+.treatment-est {
+  background-color: #ec4899;
+}
+.treatment-nca {
+  background-color: #9ca3af;
+}
+.treatment-default {
+  background-color: #8884d8;
+}
+
+/* Color dot classes for treatment indicators */
+.color-dot-res {
+  background-color: #2563eb;
+}
+.color-dot-odg {
+  background-color: #dc2626;
+}
+.color-dot-otd {
+  background-color: #059669;
+}
+.color-dot-pro {
+  background-color: #d97706;
+}
+.color-dot-exo {
+  background-color: #7c3aed;
+}
+.color-dot-end {
+  background-color: #db2777;
+}
+.color-dot-pri {
+  background-color: #0891b2;
+}
+.color-dot-exq {
+  background-color: #65a30d;
+}
+.color-dot-otp {
+  background-color: #c2410c;
+}
+.color-dot-odp {
+  background-color: #7c2d12;
+}
+.color-dot-per {
+  background-color: #be185d;
+}
+.color-dot-imp {
+  background-color: #1e40af;
+}
+.color-dot-prd {
+  background-color: #0f766e;
+}
+.color-dot-odq {
+  background-color: #991b1b;
+}
+.color-dot-dud {
+  background-color: #6b7280;
+}
+.color-dot-rtr {
+  background-color: #374151;
+}
+.color-dot-est {
+  background-color: #ec4899;
+}
+.color-dot-nca {
+  background-color: #9ca3af;
+}
+.color-dot-default {
+  background-color: #8884d8;
+}
