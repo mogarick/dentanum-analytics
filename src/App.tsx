@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import PasswordProtection from "./PasswordProtection";
 
 // interface ProcessedData {
 //   yearMonth: string;
@@ -1696,4 +1697,12 @@ const DentalTreatmentDashboard = () => {
   );
 };
 
-export default DentalTreatmentDashboard;
+const App = () => {
+  return (
+    <PasswordProtection>
+      <DentalTreatmentDashboard />
+    </PasswordProtection>
+  );
+};
+
+export default App;
