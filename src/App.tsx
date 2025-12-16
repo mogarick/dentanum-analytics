@@ -15,6 +15,28 @@ import {
 // }
 
 const DentalTreatmentDashboard = () => {
+  // Treatment descriptions
+  const treatmentDescriptions: Record<string, string> = {
+    RES: "Restauración Dental",
+    ODG: "Odontología General",
+    OTD: "Ortodoncia",
+    PRO: "Prótesis Dental",
+    EXO: "Exodoncia",
+    END: "Endodoncia",
+    PRI: "Periodoncia",
+    EXQ: "Exodoncia Quirúrgica",
+    OTP: "Ortopedia",
+    ODP: "Odontopediatría",
+    PER: "Periodoncia",
+    IMP: "Implantes",
+    PRD: "Prótesis Dentales",
+    ODQ: "Odontología Quirúrgica",
+    DUD: "Dudas/Consultas",
+    RTR: "Retratamiento",
+    EST: "Estética Dental",
+    NCA: "No Categorizado",
+  };
+
   // Raw data
   const rawData = [
     {
@@ -1456,9 +1478,56 @@ const DentalTreatmentDashboard = () => {
         groupedData[year].push(entry);
       });
 
+      // Color mapping for better Safari compatibility
+      const getColorForTreatment = (treatment: string) => {
+        const colorMap: Record<string, string> = {
+          res: "#2563eb",
+          odg: "#dc2626",
+          otd: "#059669",
+          pro: "#d97706",
+          exo: "#7c3aed",
+          end: "#db2777",
+          pri: "#0891b2",
+          exq: "#65a30d",
+          otp: "#c2410c",
+          odp: "#7c2d12",
+          per: "#be185d",
+          imp: "#1e40af",
+          prd: "#0f766e",
+          odq: "#991b1b",
+          dud: "#6b7280",
+          rtr: "#374151",
+          est: "#ec4899",
+          nca: "#9ca3af",
+        };
+        return colorMap[treatment.toLowerCase()] || "#8884d8";
+      };
+
       return (
-        <div className="bg-white p-4 border rounded-lg shadow-lg max-w-sm">
-          <p className="font-semibold text-lg mb-3">{`${label}`}</p>
+        <div
+          style={{
+            backgroundColor: "#ffffff",
+            padding: "16px",
+            border: "1px solid #e5e7eb",
+            borderRadius: "8px",
+            boxShadow:
+              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+            maxWidth: "320px",
+            fontSize: "14px",
+            color: "#1f2937",
+            zIndex: 1000,
+          }}
+        >
+          <p
+            style={{
+              fontWeight: "600",
+              fontSize: "18px",
+              marginBottom: "12px",
+              color: "#1f2937",
+            }}
+          >
+            {`${label}`}
+          </p>
           {Object.entries(groupedData)
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([year, entries]) => {
@@ -1468,33 +1537,76 @@ const DentalTreatmentDashboard = () => {
                 .reduce((sum, entry) => sum + entry.value, 0);
 
               return (
-                <div key={year} className="mb-3 last:mb-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-blue-800">{year}</h4>
-                    <span className="text-sm font-bold text-gray-700 bg-gray-100 px-2 py-1 rounded">
+                <div key={year} style={{ marginBottom: "12px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <h4
+                      style={{ fontWeight: "600", color: "#1e40af", margin: 0 }}
+                    >
+                      {year}
+                    </h4>
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: "700",
+                        color: "#374151",
+                        backgroundColor: "#f3f4f6",
+                        padding: "4px 8px",
+                        borderRadius: "4px",
+                      }}
+                    >
                       Total: {yearTotal}
                     </span>
                   </div>
-                  <div className="space-y-1">
+                  <div>
                     {entries
                       .filter((entry) => entry.value > 0)
                       .sort((a, b) => a.dataKey.localeCompare(b.dataKey))
-                      .map((entry: any, index: number) => (
-                        <p key={index} className="text-sm flex items-center">
-                          <span
-                            className={`inline-block w-2 h-2 rounded-full mr-2 color-dot-${
-                              entry.dataKey.split("-")[1]?.toLowerCase() ||
-                              "default"
-                            }`}
-                          ></span>
-                          <span className="font-medium">
-                            {entry.dataKey.split("-")[1]}:
-                          </span>
-                          <span className="ml-1">
-                            {entry.value} tratamientos
-                          </span>
-                        </p>
-                      ))}
+                      .map((entry: any, index: number) => {
+                        const treatment =
+                          entry.dataKey.split("-")[1]?.toLowerCase() ||
+                          "default";
+                        return (
+                          <p
+                            key={index}
+                            style={{
+                              fontSize: "14px",
+                              display: "flex",
+                              alignItems: "center",
+                              margin: "4px 0",
+                              color: "#1f2937",
+                            }}
+                          >
+                            <span
+                              style={{
+                                display: "inline-block",
+                                width: "8px",
+                                height: "8px",
+                                borderRadius: "50%",
+                                marginRight: "8px",
+                                backgroundColor:
+                                  getColorForTreatment(treatment),
+                              }}
+                            ></span>
+                            <span
+                              style={{ fontWeight: "500", color: "#1f2937" }}
+                            >
+                              {entry.dataKey.split("-")[1]}:
+                            </span>
+                            <span
+                              style={{ marginLeft: "4px", color: "#1f2937" }}
+                            >
+                              {entry.value} tratamientos
+                            </span>
+                          </p>
+                        );
+                      })}
                   </div>
                 </div>
               );
@@ -1508,30 +1620,75 @@ const DentalTreatmentDashboard = () => {
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+        <h1
+          style={{
+            fontSize: "clamp(1.5rem, 4vw, 1.875rem)",
+            fontWeight: "700",
+            color: "#1f2937",
+            marginBottom: "8px",
+            lineHeight: "1.2",
+          }}
+        >
           📊 Tratamientos Dentales por Mes y Año
         </h1>
-        <p className="text-sm sm:text-base text-gray-600">
+        <p
+          style={{
+            fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+            color: "#4b5563",
+            lineHeight: "1.5",
+          }}
+        >
           Comparación de tratamientos por mes (3 barras por mes, una por año)
         </p>
       </div>
 
       {/* Treatment Selection */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
-        <h3 className="text-lg font-semibold mb-3">
+        <h3
+          style={{
+            fontSize: "1.125rem",
+            fontWeight: "600",
+            color: "#1f2937",
+            marginBottom: "12px",
+            lineHeight: "1.3",
+          }}
+        >
           Tratamientos ({selectedTreatments.length})
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
           {allTreatments.map((treatment) => (
             <label
               key={treatment}
-              className="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                cursor: "pointer",
+                padding: "8px",
+                borderRadius: "4px",
+                backgroundColor: selectedTreatments.includes(treatment)
+                  ? "#f3f4f6"
+                  : "transparent",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#f9fafb";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  selectedTreatments.includes(treatment)
+                    ? "#f3f4f6"
+                    : "transparent";
+              }}
             >
               <input
                 type="checkbox"
                 checked={selectedTreatments.includes(treatment)}
                 onChange={() => handleTreatmentToggle(treatment)}
-                className="text-blue-600"
+                style={{
+                  accentColor: "#2563eb",
+                  width: "16px",
+                  height: "16px",
+                }}
               />
               <span className="text-sm">{treatment}</span>
             </label>
@@ -1541,7 +1698,15 @@ const DentalTreatmentDashboard = () => {
 
       {/* Summary Statistics */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6">
-        <h3 className="text-lg font-semibold mb-4">
+        <h3
+          style={{
+            fontSize: "1.125rem",
+            fontWeight: "600",
+            color: "#1f2937",
+            marginBottom: "16px",
+            lineHeight: "1.3",
+          }}
+        >
           Resumen de Tratamientos Seleccionados
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
@@ -1553,8 +1718,35 @@ const DentalTreatmentDashboard = () => {
               <div
                 className={`w-4 h-4 rounded-full mx-auto mb-2 color-dot-${treatment.toLowerCase()}`}
               ></div>
-              <div className="text-2xl font-bold text-gray-800">{count}</div>
-              <div className="text-sm text-gray-600">{treatment}</div>
+              <div
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "700",
+                  color: "#1f2937",
+                  lineHeight: "1.2",
+                }}
+              >
+                {count}
+              </div>
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#4b5563",
+                  lineHeight: "1.4",
+                }}
+              >
+                {treatment}
+              </div>
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#6b7280",
+                  lineHeight: "1.3",
+                  marginTop: "2px",
+                }}
+              >
+                {treatmentDescriptions[treatment] || treatment}
+              </div>
             </div>
           ))}
         </div>
@@ -1562,7 +1754,15 @@ const DentalTreatmentDashboard = () => {
 
       {/* Chart */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h3 className="text-lg font-semibold mb-4">
+        <h3
+          style={{
+            fontSize: "1.125rem",
+            fontWeight: "600",
+            color: "#1f2937",
+            marginBottom: "16px",
+            lineHeight: "1.3",
+          }}
+        >
           Comparación Mensual: 3 Barras por Mes (2023, 2024, 2025)
         </h3>
         <ResponsiveContainer width="100%" height={400}>
@@ -1624,69 +1824,244 @@ const DentalTreatmentDashboard = () => {
 
       {/* Insights Panel */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mt-6">
-        <h3 className="text-lg font-semibold mb-4">
+        <h3
+          style={{
+            fontSize: "1.125rem",
+            fontWeight: "600",
+            color: "#1f2937",
+            marginBottom: "16px",
+            lineHeight: "1.3",
+          }}
+        >
           Insights Clave para Análisis
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div>
-            <h4 className="font-semibold text-blue-800 mb-2">
+            <h4
+              style={{
+                fontWeight: "600",
+                color: "#1e40af",
+                marginBottom: "8px",
+                fontSize: "1rem",
+                lineHeight: "1.4",
+              }}
+            >
               📊 Tratamientos más Frecuentes
             </h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <strong>RES:</strong> Restauración Dental - Mayor demanda
+            <ul
+              style={{
+                listStyleType: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  RES:
+                </strong>{" "}
+                Restauración Dental - Mayor demanda
               </li>
-              <li>
-                <strong>ODG:</strong> Odontología General - Consultas frecuentes
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  ODG:
+                </strong>{" "}
+                Odontología General - Consultas frecuentes
               </li>
-              <li>
-                <strong>OTD:</strong> Ortodoncia - Tratamientos largos
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  OTD:
+                </strong>{" "}
+                Ortodoncia - Tratamientos largos
               </li>
-              <li>
-                <strong>PRO:</strong> Prótesis Dental - Demanda constante
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  PRO:
+                </strong>{" "}
+                Prótesis Dental - Demanda constante
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-green-800 mb-2">
+            <h4
+              style={{
+                fontWeight: "600",
+                color: "#166534",
+                marginBottom: "8px",
+                fontSize: "1rem",
+                lineHeight: "1.4",
+              }}
+            >
               📈 Análisis Disponible
             </h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                • <strong>Comparación Mensual:</strong> 3 barras por mes (una
-                por año)
+            <ul
+              style={{
+                listStyleType: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Comparación Mensual:
+                </strong>{" "}
+                3 barras por mes (una por año)
               </li>
-              <li>
-                • <strong>Distribución:</strong> Proporción de tratamientos por
-                año
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Distribución:
+                </strong>{" "}
+                Proporción de tratamientos por año
               </li>
-              <li>
-                • <strong>Evolución:</strong> Crecimiento año a año por mes
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Evolución:
+                </strong>{" "}
+                Crecimiento año a año por mes
               </li>
-              <li>
-                • <strong>Estacionalidad:</strong> Patrones mensuales comparados
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Estacionalidad:
+                </strong>{" "}
+                Patrones mensuales comparados
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-purple-800 mb-2">
+            <h4
+              style={{
+                fontWeight: "600",
+                color: "#7c2d12",
+                marginBottom: "8px",
+                fontSize: "1rem",
+                lineHeight: "1.4",
+              }}
+            >
               🎯 Recomendaciones Estratégicas
             </h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                • <strong>Capacidad:</strong> Enfocar recursos en RES y OTD
+            <ul
+              style={{
+                listStyleType: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Capacidad:
+                </strong>{" "}
+                Enfocar recursos en RES y OTD
               </li>
-              <li>
-                • <strong>Estacionalidad:</strong> Picos en julio-agosto
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Estacionalidad:
+                </strong>{" "}
+                Picos en julio-agosto
               </li>
-              <li>
-                • <strong>Crecimiento:</strong> Monitorear tendencias año a año
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Crecimiento:
+                </strong>{" "}
+                Monitorear tendencias año a año
               </li>
-              <li>
-                • <strong>Planificación:</strong> Anticipar demanda por
-                especialidad
+              <li
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#1f2937",
+                  marginBottom: "4px",
+                  lineHeight: "1.4",
+                }}
+              >
+                •{" "}
+                <strong style={{ fontWeight: "600", color: "#1f2937" }}>
+                  Planificación:
+                </strong>{" "}
+                Anticipar demanda por especialidad
               </li>
             </ul>
           </div>
