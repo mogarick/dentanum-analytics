@@ -10,7 +10,9 @@
     "typecheck": "tsc",
     "migrate:typo": "tsx src/scripts/migrate-typo-field.ts",
     "migrate:typo:execute": "tsx src/scripts/migrate-typo-field.ts --execute",
-    "migrate:typo:remove": "tsx src/scripts/migrate-typo-field.ts --execute --remove-typo"
+    "migrate:typo:remove": "tsx src/scripts/migrate-typo-field.ts --execute --remove-typo",
+    "reclassify:pul": "tsx src/scripts/reclassify-pul-cases.ts",
+    "reclassify:pul:execute": "tsx src/scripts/reclassify-pul-cases.ts --execute"
   },
   "dependencies": {
     "@react-router/node": "^7.10.1",
