@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { TREATMENT_DESCRIPTIONS } from "./utils/treatmentCatalog";
 
 // interface ProcessedData {
 //   yearMonth: string;
@@ -15,27 +16,8 @@ import {
 // }
 
 const DentalTreatmentDashboard = () => {
-  // Treatment descriptions
-  const treatmentDescriptions: Record<string, string> = {
-    RES: "Restauración Dental",
-    ODG: "Odontología General",
-    OTD: "Ortodoncia",
-    PRO: "Prótesis Dental",
-    EXO: "Exodoncia",
-    END: "Endodoncia",
-    PRI: "Periodoncia",
-    EXQ: "Exodoncia Quirúrgica",
-    OTP: "Ortopedia",
-    ODP: "Odontopediatría",
-    PER: "Periodoncia",
-    IMP: "Implantes",
-    PRD: "Prótesis Dentales",
-    ODQ: "Odontología Quirúrgica",
-    DUD: "Dudas/Consultas",
-    RTR: "Retratamiento",
-    EST: "Estética Dental",
-    NCA: "No Categorizado",
-  };
+  // Treatment descriptions - from centralized catalog
+  const treatmentDescriptions = TREATMENT_DESCRIPTIONS;
 
   // Raw data
   const rawData = [

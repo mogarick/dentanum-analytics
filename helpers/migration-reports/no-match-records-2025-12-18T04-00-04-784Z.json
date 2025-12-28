@@ -1,0 +1,9 @@
+[
+  {
+    "_id": "VamCZCftYoCk",
+    "date": "2023-05-25",
+    "patientId": "P#L9O7jzLsc0Et",
+    "currentCode": "RES",
+    "reason": "No matching attention found for same patient + same day"
+  }
+]

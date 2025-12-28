@@ -16,6 +16,7 @@ import {
 } from "recharts";
 import type { TreatmentData } from "../types/treatmentData.types";
 import type { MoneyData } from "../types/moneyData.types";
+import { TREATMENT_DESCRIPTIONS } from "../utils/treatmentCatalog";
 
 interface Props {
   treatmentData: TreatmentData[];
@@ -30,29 +31,8 @@ const DentalTreatmentDashboard = ({
   onRefresh,
   isRefreshing,
 }: Props) => {
-  // Treatment descriptions
-  const treatmentDescriptions: Record<string, string> = {
-    RES: "Restauración Dental",
-    ODG: "Odontología General",
-    OTD: "Ortodoncia",
-    PRO: "Prótesis Dental",
-    EXO: "Exodoncia",
-    END: "Endodoncia",
-    PRI: "Periodoncia",
-    EXQ: "Exodoncia Quirúrgica",
-    OTP: "Ortopedia",
-    ODP: "Odontopediatría",
-    PER: "Periodoncia",
-    IMP: "Implantes",
-    PRD: "Prótesis Dentales",
-    ODQ: "Odontología Quirúrgica",
-    DUD: "Dudas/Consultas",
-    RTR: "Retratamiento",
-    EST: "Estética Dental",
-    NCA: "No Categorizado",
-    INT: "Odontología Integral",
-    PUL: "Problemas Pulpares",
-  };
+  // Treatment descriptions - from centralized catalog
+  const treatmentDescriptions = TREATMENT_DESCRIPTIONS;
 
   // Initialize selected treatments - include INT if present in moneyData
   const [selectedTreatments, setSelectedTreatments] = useState(() => {
@@ -87,8 +67,23 @@ const DentalTreatmentDashboard = ({
     }
   }, [moneyData, selectedTreatments]);
 
-  // Year filter for strategic analysis
+  // Year filter for strategic analysis - NOW GLOBAL!
   const [selectedYear, setSelectedYear] = useState<string>("all");
+
+  // Filter data by selected year
+  const filteredTreatmentData = useMemo(() => {
+    if (selectedYear === "all") return treatmentData;
+    return treatmentData.filter((item) =>
+      item._id.yearMonth.startsWith(selectedYear)
+    );
+  }, [treatmentData, selectedYear]);
+
+  const filteredMoneyData = useMemo(() => {
+    if (selectedYear === "all") return moneyData;
+    return moneyData.filter((item) =>
+      item._id.yearMonth.startsWith(selectedYear)
+    );
+  }, [moneyData, selectedYear]);
 
   // State for expand/collapse sections (Progressive Disclosure)
   const [showTemporalCharts, setShowTemporalCharts] = useState<boolean>(false);
@@ -127,7 +122,7 @@ const DentalTreatmentDashboard = ({
     > = {};
 
     // Group data by month and year
-    treatmentData.forEach((item) => {
+    filteredTreatmentData.forEach((item) => {
       const year = item._id.yearMonth.split("-")[0];
       const month = item._id.yearMonth.split("-")[1];
       const treatmentCode = item._id.treatmentCode;
@@ -183,7 +178,7 @@ const DentalTreatmentDashboard = ({
     });
 
     return result;
-  }, [treatmentData, selectedTreatments]);
+  }, [filteredTreatmentData, selectedTreatments]);
 
   // Money chart data (similar structure)
   const moneyChartData = useMemo(() => {
@@ -193,7 +188,7 @@ const DentalTreatmentDashboard = ({
     > = {};
 
     // Group money data by month and year
-    moneyData.forEach((item) => {
+    filteredMoneyData.forEach((item) => {
       const year = item._id.yearMonth.split("-")[0];
       const month = item._id.yearMonth.split("-")[1];
       const treatmentCode = item._id.treatmentCode;
@@ -245,12 +240,12 @@ const DentalTreatmentDashboard = ({
     });
 
     return result;
-  }, [moneyData, selectedTreatments]);
+  }, [filteredMoneyData, selectedTreatments]);
 
   // Get unique treatments from both datasets
   // Include treatments from moneyData that might not be in treatmentData (e.g., INT)
   const treatmentsFromAttentions = new Set(
-    treatmentData.map((item) => item._id.treatmentCode)
+    filteredTreatmentData.map((item) => item._id.treatmentCode)
   );
   const treatmentsFromSales = new Set(
     moneyData.map((item) => item._id.treatmentCode)
@@ -274,25 +269,25 @@ const DentalTreatmentDashboard = ({
       (t) => t !== "INT"
     );
     treatmentsForAttentions.forEach((treatment) => {
-      const total = treatmentData
+      const total = filteredTreatmentData
         .filter((item) => item._id.treatmentCode === treatment)
         .reduce((sum, item) => sum + item.count, 0);
       stats[treatment] = total;
     });
     return stats;
-  }, [selectedTreatments, treatmentData]);
+  }, [selectedTreatments, filteredTreatmentData]);
 
   // Calculate money summary statistics
   const moneySummaryStats = useMemo(() => {
     const stats: Record<string, number> = {};
     selectedTreatments.forEach((treatment) => {
-      const total = moneyData
+      const total = filteredMoneyData
         .filter((item) => item._id.treatmentCode === treatment)
         .reduce((sum, item) => sum + item.totalAmount, 0);
       stats[treatment] = total;
     });
     return stats;
-  }, [selectedTreatments, moneyData]);
+  }, [selectedTreatments, filteredMoneyData]);
 
   // Order treatments for attentions (by count, descending) - exclude INT
   const orderedTreatmentsForAttentions = useMemo(() => {
@@ -312,7 +307,7 @@ const DentalTreatmentDashboard = ({
   const insights = useMemo(() => {
     // Top treatments by count
     const treatmentCounts = allTreatments.map((treatment) => {
-      const count = treatmentData
+      const count = filteredTreatmentData
         .filter((item) => item._id.treatmentCode === treatment)
         .reduce((sum, item) => sum + item.count, 0);
       return { treatment, count };
@@ -323,7 +318,7 @@ const DentalTreatmentDashboard = ({
 
     // Top treatments by revenue
     const treatmentRevenue = allTreatments.map((treatment) => {
-      const revenue = moneyData
+      const revenue = filteredMoneyData
         .filter((item) => item._id.treatmentCode === treatment)
         .reduce((sum, item) => sum + item.totalAmount, 0);
       return { treatment, revenue };
@@ -351,15 +346,15 @@ const DentalTreatmentDashboard = ({
       .slice(0, 3);
 
     // Total statistics - only include revenue from treatments that have encounters
-    const totalTreatments = treatmentData.reduce(
+    const totalTreatments = filteredTreatmentData.reduce(
       (sum, item) => sum + item.count,
       0
     );
-    // Only sum revenue for treatment codes that exist in treatmentData (have encounters)
+    // Only sum revenue for treatment codes that exist in filteredTreatmentData (have encounters)
     const treatmentCodesWithEncounters = new Set(
-      treatmentData.map((item) => item._id.treatmentCode)
+      filteredTreatmentData.map((item) => item._id.treatmentCode)
     );
-    const totalRevenue = moneyData
+    const totalRevenue = filteredMoneyData
       .filter((item) =>
         treatmentCodesWithEncounters.has(item._id.treatmentCode)
       )
@@ -375,26 +370,11 @@ const DentalTreatmentDashboard = ({
       totalRevenue,
       overallAvgRevenue,
     };
-  }, [treatmentData, moneyData, allTreatments]);
+  }, [filteredTreatmentData, filteredMoneyData, allTreatments]);
 
   // Strategic Analysis: Quadrant Matrix, Scatter Plot, and Analysis Table
   const strategicAnalysis = useMemo(() => {
-    // Filter data by selected year
-    const filteredTreatmentData =
-      selectedYear === "all"
-        ? treatmentData
-        : treatmentData.filter((item) => {
-            const year = item._id.yearMonth.split("-")[0];
-            return year === selectedYear;
-          });
-
-    const filteredMoneyData =
-      selectedYear === "all"
-        ? moneyData
-        : moneyData.filter((item) => {
-            const year = item._id.yearMonth.split("-")[0];
-            return year === selectedYear;
-          });
+    // Data is already filtered by selected year via filteredTreatmentData and filteredMoneyData
 
     // Get complete data for all treatments (only those with encounters)
     const treatmentCodesWithEncounters = new Set(
@@ -477,15 +457,16 @@ const DentalTreatmentDashboard = ({
       }
     });
 
-    // Sort each quadrant by revenue (descending), then by volume (descending) if revenue is equal
+    // Sort each quadrant by average revenue (descending) - most profitable treatments first
     Object.keys(quadrants).forEach((key) => {
       quadrants[key as keyof typeof quadrants].sort((a, b) => {
-        if (b.revenue !== a.revenue) {
-          return b.revenue - a.revenue; // Sort by revenue first
-        }
-        return b.count - a.count; // Then by volume
+        return b.avgRevenue - a.avgRevenue; // Sort by average revenue per attention
       });
     });
+
+    // Get the most profitable "Star" treatment (first in the sorted stars quadrant)
+    const starsTopRentable =
+      quadrants.stars.length > 0 ? quadrants.stars[0] : null;
 
     return {
       data: analysisData,
@@ -495,8 +476,9 @@ const DentalTreatmentDashboard = ({
       medianAvgRevenue,
       avgCount,
       avgRevenue,
+      starsTopRentable,
     };
-  }, [treatmentData, moneyData, allTreatments, selectedYear]);
+  }, [filteredTreatmentData, filteredMoneyData, allTreatments]);
 
   const handleTreatmentToggle = (treatment: string) => {
     setSelectedTreatments((prev) =>
@@ -682,6 +664,50 @@ const DentalTreatmentDashboard = ({
         >
           Vista ejecutiva de atenciones, ingresos y oportunidades estratégicas
         </p>
+
+        {/* Year Filter Buttons - Global */}
+        <div
+          style={{
+            position: "absolute",
+            top: "24px",
+            right: "160px",
+            display: "flex",
+            gap: "8px",
+          }}
+        >
+          {["all", "2023", "2024", "2025"].map((year) => (
+            <button
+              key={year}
+              onClick={() => setSelectedYear(year)}
+              style={{
+                padding: "6px 12px",
+                fontSize: "0.875rem",
+                fontWeight: selectedYear === year ? "600" : "500",
+                color: selectedYear === year ? "#ffffff" : "#6b7280",
+                backgroundColor: selectedYear === year ? "#2563eb" : "#ffffff",
+                border: selectedYear === year ? "none" : "1px solid #d1d5db",
+                borderRadius: "6px",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                if (selectedYear !== year) {
+                  e.currentTarget.style.backgroundColor = "#f3f4f6";
+                  e.currentTarget.style.borderColor = "#9ca3af";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedYear !== year) {
+                  e.currentTarget.style.backgroundColor = "#ffffff";
+                  e.currentTarget.style.borderColor = "#d1d5db";
+                }
+              }}
+            >
+              {year === "all" ? "Todos" : year}
+            </button>
+          ))}
+        </div>
+
         {/* Botón de actualización flotante - NO interfiere con el layout original */}
         <button
           onClick={onRefresh}
@@ -773,7 +799,7 @@ const DentalTreatmentDashboard = ({
           <div className="flex justify-between items-start mb-2">
             <div className="text-3xl">📊</div>
             <div className="text-xs bg-purple-400 bg-opacity-50 px-2 py-1 rounded">
-              Eficiencia
+              Ingreso Promedio
             </div>
           </div>
           <div className="text-4xl font-bold mb-1">
@@ -790,15 +816,28 @@ const DentalTreatmentDashboard = ({
           <div className="flex justify-between items-start mb-2">
             <div className="text-3xl">⭐</div>
             <div className="text-xs bg-orange-400 bg-opacity-50 px-2 py-1 rounded">
-              Más Frecuente
+              Más Rentable
             </div>
           </div>
-          <div className="text-4xl font-bold mb-1">
-            {insights?.topByCount?.[0]?.treatment || "N/A"}
+          <div className="text-2xl font-bold mb-1">
+            {strategicAnalysis?.starsTopRentable?.treatment || "N/A"}
           </div>
-          <div className="text-sm opacity-90">
-            {insights?.topByCount?.[0]?.count?.toLocaleString("es-MX") || "0"}{" "}
-            atenciones
+          <div className="text-sm opacity-90 mb-2">
+            {strategicAnalysis?.starsTopRentable?.treatment
+              ? treatmentDescriptions[
+                  strategicAnalysis.starsTopRentable.treatment
+                ] || strategicAnalysis.starsTopRentable.treatment
+              : ""}
+          </div>
+          <div className="text-lg font-semibold">
+            $
+            {strategicAnalysis?.starsTopRentable?.avgRevenue?.toLocaleString(
+              "es-MX",
+              {
+                maximumFractionDigits: 0,
+              }
+            ) || "0"}{" "}
+            por atención
           </div>
         </div>
       </div>
@@ -1100,42 +1139,6 @@ const DentalTreatmentDashboard = ({
             >
               🎯 Matriz de Cuadrantes (Vista Ejecutiva)
             </h3>
-            {/* Year Selector */}
-            <div style={{ display: "flex", gap: "8px" }}>
-              {["all", "2023", "2024", "2025"].map((year) => (
-                <button
-                  key={year}
-                  onClick={() => setSelectedYear(year)}
-                  style={{
-                    padding: "8px 16px",
-                    fontSize: "0.875rem",
-                    fontWeight: selectedYear === year ? "600" : "500",
-                    color: selectedYear === year ? "#ffffff" : "#6b7280",
-                    backgroundColor:
-                      selectedYear === year ? "#2563eb" : "#ffffff",
-                    border:
-                      selectedYear === year ? "none" : "1px solid #d1d5db",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedYear !== year) {
-                      e.currentTarget.style.backgroundColor = "#f3f4f6";
-                      e.currentTarget.style.borderColor = "#9ca3af";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedYear !== year) {
-                      e.currentTarget.style.backgroundColor = "#ffffff";
-                      e.currentTarget.style.borderColor = "#d1d5db";
-                    }
-                  }}
-                >
-                  {year === "all" ? "Todos" : year}
-                </button>
-              ))}
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-6">
             {/* Quadrant 1: Stars (High Volume, High Revenue) */}
@@ -2970,416 +2973,431 @@ const DentalTreatmentDashboard = ({
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h3
-          style={{
-            fontSize: "1.125rem",
-            fontWeight: "600",
-            color: "#1f2937",
-            marginBottom: "16px",
-            lineHeight: "1.3",
-          }}
-        >
-          Comparación Mensual: 3 Barras por Mes (2023, 2024, 2025)
-        </h3>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis
-              dataKey="month"
-              angle={-45}
-              textAnchor="end"
-              height={80}
-              fontSize={12}
-            />
-            <YAxis />
-            <Tooltip content={<CustomTooltip />} />
-            {orderedTreatmentsForAttentions.map((treatment) => (
-              <Bar
-                key={treatment}
-                dataKey={`2023-${treatment}`}
-                stackId="2023"
-                fill={treatmentColors[treatment] || "#8884d8"}
-                fillOpacity={0.8}
-                name={`${treatment}`}
-              />
-            ))}
-            {years.includes("2024") &&
-              orderedTreatmentsForAttentions.map((treatment) => (
-                <Bar
-                  key={`2024-${treatment}`}
-                  dataKey={`2024-${treatment}`}
-                  stackId="2024"
-                  fill={treatmentColors[treatment] || "#8884d8"}
-                  fillOpacity={0.8}
-                  name={`${treatment}`}
-                />
-              ))}
-            {years.includes("2025") &&
-              orderedTreatmentsForAttentions.map((treatment) => (
-                <Bar
-                  key={`2025-${treatment}`}
-                  dataKey={`2025-${treatment}`}
-                  stackId="2025"
-                  fill={treatmentColors[treatment] || "#8884d8"}
-                  fillOpacity={0.8}
-                  name={`${treatment}`}
-                />
-              ))}
-          </BarChart>
-        </ResponsiveContainer>
-        <div className="mt-4 text-sm text-gray-600 text-center">
-          <p>
-            💡 <strong>Hover:</strong> Pasa el mouse sobre las barras para ver
-            datos organizados por año. Cada tipo de atención mantiene el mismo
-            color.
-          </p>
-        </div>
-      </div>
-
-      {/* Money Data Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mt-6">
-        <h2
-          style={{
-            fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
-            fontWeight: "700",
-            color: "#1f2937",
-            marginBottom: "8px",
-            lineHeight: "1.2",
-          }}
-        >
-          💰 Ingresos por Atención (Servicios Vendidos)
-        </h2>
-        <p
-          style={{
-            fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
-            color: "#4b5563",
-            lineHeight: "1.5",
-            marginBottom: "24px",
-          }}
-        >
-          Comparación de ingresos por mes (3 barras por mes, una por año)
-        </p>
-
-        {/* Money Summary Statistics */}
-        <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6">
-          <h3
-            style={{
-              fontSize: "1.125rem",
-              fontWeight: "600",
-              color: "#1f2937",
-              marginBottom: "16px",
-              lineHeight: "1.3",
-            }}
-          >
-            Resumen de Ingresos por Atención
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-            {orderedTreatmentsForSales.map((treatment) => {
-              const amount = moneySummaryStats[treatment] || 0;
-              return (
-                <div
-                  key={treatment}
-                  className="bg-white p-4 rounded-lg text-center border border-gray-200"
-                >
-                  <div
-                    className={`w-4 h-4 rounded-full mx-auto mb-2 color-dot-${treatment.toLowerCase()}`}
-                  ></div>
-                  <div
-                    style={{
-                      fontSize: "1.5rem",
-                      fontWeight: "700",
-                      color: "#1f2937",
-                      lineHeight: "1.2",
-                    }}
-                  >
-                    $
-                    {amount.toLocaleString("es-MX", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.875rem",
-                      color: "#4b5563",
-                      lineHeight: "1.4",
-                    }}
-                  >
-                    {treatment}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.75rem",
-                      color: "#6b7280",
-                      lineHeight: "1.3",
-                      marginTop: "2px",
-                    }}
-                  >
-                    {treatmentDescriptions[treatment] || treatment}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Money Chart */}
-        <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
-          <h3
-            style={{
-              fontSize: "1.125rem",
-              fontWeight: "600",
-              color: "#1f2937",
-              marginBottom: "16px",
-              lineHeight: "1.3",
-            }}
-          >
-            Comparación Mensual de Ingresos: 3 Barras por Mes (2023, 2024, 2025)
-          </h3>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              data={moneyChartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+      {/* Temporal Charts - Only show when "Todos" is selected */}
+      {selectedYear === "all" && (
+        <>
+          {/* Chart */}
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+            <h3
+              style={{
+                fontSize: "1.125rem",
+                fontWeight: "600",
+                color: "#1f2937",
+                marginBottom: "16px",
+                lineHeight: "1.3",
+              }}
             >
-              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-              <XAxis
-                dataKey="month"
-                angle={-45}
-                textAnchor="end"
-                height={80}
-                fontSize={12}
-              />
-              <YAxis
-                tickFormatter={(value) =>
-                  `$${value.toLocaleString("es-MX", { maximumFractionDigits: 0 })}`
-                }
-              />
-              <Tooltip
-                content={({ active, payload, label }) => {
-                  if (active && payload && payload.length) {
-                    const groupedData: Record<string, any[]> = {};
-                    payload.forEach((entry: any) => {
-                      const year = entry.dataKey.split("-")[0];
-                      if (!groupedData[year]) {
-                        groupedData[year] = [];
-                      }
-                      groupedData[year].push(entry);
-                    });
+              Comparación Mensual: 3 Barras por Mes (2023, 2024, 2025)
+            </h3>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart
+                data={chartData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                <XAxis
+                  dataKey="month"
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  fontSize={12}
+                />
+                <YAxis />
+                <Tooltip content={<CustomTooltip />} />
+                {orderedTreatmentsForAttentions.map((treatment) => (
+                  <Bar
+                    key={treatment}
+                    dataKey={`2023-${treatment}`}
+                    stackId="2023"
+                    fill={treatmentColors[treatment] || "#8884d8"}
+                    fillOpacity={0.8}
+                    name={`${treatment}`}
+                  />
+                ))}
+                {years.includes("2024") &&
+                  orderedTreatmentsForAttentions.map((treatment) => (
+                    <Bar
+                      key={`2024-${treatment}`}
+                      dataKey={`2024-${treatment}`}
+                      stackId="2024"
+                      fill={treatmentColors[treatment] || "#8884d8"}
+                      fillOpacity={0.8}
+                      name={`${treatment}`}
+                    />
+                  ))}
+                {years.includes("2025") &&
+                  orderedTreatmentsForAttentions.map((treatment) => (
+                    <Bar
+                      key={`2025-${treatment}`}
+                      dataKey={`2025-${treatment}`}
+                      stackId="2025"
+                      fill={treatmentColors[treatment] || "#8884d8"}
+                      fillOpacity={0.8}
+                      name={`${treatment}`}
+                    />
+                  ))}
+              </BarChart>
+            </ResponsiveContainer>
+            <div className="mt-4 text-sm text-gray-600 text-center">
+              <p>
+                💡 <strong>Hover:</strong> Pasa el mouse sobre las barras para
+                ver datos organizados por año. Cada tipo de atención mantiene el
+                mismo color.
+              </p>
+            </div>
+          </div>
 
-                    return (
+          {/* Money Data Section */}
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mt-6">
+            <h2
+              style={{
+                fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
+                fontWeight: "700",
+                color: "#1f2937",
+                marginBottom: "8px",
+                lineHeight: "1.2",
+              }}
+            >
+              💰 Ingresos por Atención (Servicios Vendidos)
+            </h2>
+            <p
+              style={{
+                fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+                color: "#4b5563",
+                lineHeight: "1.5",
+                marginBottom: "24px",
+              }}
+            >
+              Comparación de ingresos por mes (3 barras por mes, una por año)
+            </p>
+
+            {/* Money Summary Statistics */}
+            <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-6">
+              <h3
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: "600",
+                  color: "#1f2937",
+                  marginBottom: "16px",
+                  lineHeight: "1.3",
+                }}
+              >
+                Resumen de Ingresos por Atención
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+                {orderedTreatmentsForSales.map((treatment) => {
+                  const amount = moneySummaryStats[treatment] || 0;
+                  return (
+                    <div
+                      key={treatment}
+                      className="bg-white p-4 rounded-lg text-center border border-gray-200"
+                    >
+                      <div
+                        className={`w-4 h-4 rounded-full mx-auto mb-2 color-dot-${treatment.toLowerCase()}`}
+                      ></div>
                       <div
                         style={{
-                          backgroundColor: "#ffffff",
-                          padding: "16px",
-                          border: "1px solid #e5e7eb",
-                          borderRadius: "8px",
-                          boxShadow:
-                            "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-                          maxWidth: "320px",
-                          fontSize: "14px",
+                          fontSize: "1.5rem",
+                          fontWeight: "700",
                           color: "#1f2937",
-                          zIndex: 1000,
+                          lineHeight: "1.2",
                         }}
                       >
-                        <p
-                          style={{
-                            fontWeight: "600",
-                            fontSize: "18px",
-                            marginBottom: "12px",
-                            color: "#1f2937",
-                          }}
-                        >
-                          {`${label}`}
-                        </p>
-                        {Object.entries(groupedData)
-                          .sort(([a], [b]) => a.localeCompare(b))
-                          .map(([year, entries]) => {
-                            const yearTotal = entries
-                              .filter((entry: any) => entry.value > 0)
-                              .reduce(
-                                (sum: number, entry: any) => sum + entry.value,
-                                0
-                              );
-
-                            return (
-                              <div key={year} style={{ marginBottom: "12px" }}>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    marginBottom: "8px",
-                                  }}
-                                >
-                                  <h4
-                                    style={{
-                                      fontWeight: "600",
-                                      color: "#1e40af",
-                                      margin: 0,
-                                    }}
-                                  >
-                                    {year}
-                                  </h4>
-                                  <span
-                                    style={{
-                                      fontSize: "12px",
-                                      fontWeight: "700",
-                                      color: "#374151",
-                                      backgroundColor: "#f3f4f6",
-                                      padding: "4px 8px",
-                                      borderRadius: "4px",
-                                    }}
-                                  >
-                                    Total: $
-                                    {yearTotal.toLocaleString("es-MX", {
-                                      maximumFractionDigits: 0,
-                                    })}
-                                  </span>
-                                </div>
-                                <div>
-                                  {entries
-                                    .filter((entry: any) => entry.value > 0)
-                                    .sort((a: any, b: any) =>
-                                      a.dataKey.localeCompare(b.dataKey)
-                                    )
-                                    .map((entry: any, index: number) => {
-                                      const treatment =
-                                        entry.dataKey
-                                          .split("-")[1]
-                                          ?.toLowerCase() || "default";
-                                      const getColorForTreatment = (
-                                        t: string
-                                      ) => {
-                                        const colorMap: Record<string, string> =
-                                          {
-                                            res: "#2563eb",
-                                            odg: "#dc2626",
-                                            otd: "#059669",
-                                            pro: "#d97706",
-                                            exo: "#7c3aed",
-                                            end: "#db2777",
-                                            pri: "#0891b2",
-                                            exq: "#65a30d",
-                                            otp: "#c2410c",
-                                            odp: "#7c2d12",
-                                            per: "#be185d",
-                                            imp: "#1e40af",
-                                            prd: "#0f766e",
-                                            odq: "#991b1b",
-                                            dud: "#6b7280",
-                                            rtr: "#374151",
-                                            est: "#ec4899",
-                                            nca: "#9ca3af",
-                                            int: "#f59e0b",
-                                            pul: "#8b5cf6",
-                                          };
-                                        return (
-                                          colorMap[t.toLowerCase()] || "#8884d8"
-                                        );
-                                      };
-                                      return (
-                                        <p
-                                          key={index}
-                                          style={{
-                                            fontSize: "14px",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            margin: "4px 0",
-                                            color: "#1f2937",
-                                          }}
-                                        >
-                                          <span
-                                            style={{
-                                              display: "inline-block",
-                                              width: "8px",
-                                              height: "8px",
-                                              borderRadius: "50%",
-                                              marginRight: "8px",
-                                              backgroundColor:
-                                                getColorForTreatment(treatment),
-                                            }}
-                                          ></span>
-                                          <span
-                                            style={{
-                                              fontWeight: "500",
-                                              color: "#1f2937",
-                                            }}
-                                          >
-                                            {entry.dataKey.split("-")[1]}:
-                                          </span>
-                                          <span
-                                            style={{
-                                              marginLeft: "4px",
-                                              color: "#1f2937",
-                                            }}
-                                          >
-                                            $
-                                            {entry.value.toLocaleString(
-                                              "es-MX",
-                                              { maximumFractionDigits: 0 }
-                                            )}
-                                          </span>
-                                        </p>
-                                      );
-                                    })}
-                                </div>
-                              </div>
-                            );
-                          })}
+                        $
+                        {amount.toLocaleString("es-MX", {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })}
                       </div>
-                    );
-                  }
-                  return null;
+                      <div
+                        style={{
+                          fontSize: "0.875rem",
+                          color: "#4b5563",
+                          lineHeight: "1.4",
+                        }}
+                      >
+                        {treatment}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "#6b7280",
+                          lineHeight: "1.3",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {treatmentDescriptions[treatment] || treatment}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Money Chart */}
+            <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
+              <h3
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: "600",
+                  color: "#1f2937",
+                  marginBottom: "16px",
+                  lineHeight: "1.3",
                 }}
-              />
-              {orderedTreatmentsForSales.map((treatment) => (
-                <Bar
-                  key={treatment}
-                  dataKey={`2023-${treatment}`}
-                  stackId="2023"
-                  fill={treatmentColors[treatment] || "#8884d8"}
-                  fillOpacity={0.8}
-                  name={`${treatment}`}
-                />
-              ))}
-              {years.includes("2024") &&
-                orderedTreatmentsForSales.map((treatment) => (
-                  <Bar
-                    key={`2024-${treatment}`}
-                    dataKey={`2024-${treatment}`}
-                    stackId="2024"
-                    fill={treatmentColors[treatment] || "#8884d8"}
-                    fillOpacity={0.8}
-                    name={`${treatment}`}
+              >
+                Comparación Mensual de Ingresos: 3 Barras por Mes (2023, 2024,
+                2025)
+              </h3>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={moneyChartData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                  <XAxis
+                    dataKey="month"
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    fontSize={12}
                   />
-                ))}
-              {years.includes("2025") &&
-                orderedTreatmentsForSales.map((treatment) => (
-                  <Bar
-                    key={`2025-${treatment}`}
-                    dataKey={`2025-${treatment}`}
-                    stackId="2025"
-                    fill={treatmentColors[treatment] || "#8884d8"}
-                    fillOpacity={0.8}
-                    name={`${treatment}`}
+                  <YAxis
+                    tickFormatter={(value) =>
+                      `$${value.toLocaleString("es-MX", { maximumFractionDigits: 0 })}`
+                    }
                   />
-                ))}
-            </BarChart>
-          </ResponsiveContainer>
-          <div className="mt-4 text-sm text-gray-600 text-center">
-            <p>
-              💡 <strong>Hover:</strong> Pasa el mouse sobre las barras para ver
-              ingresos organizados por año. Cada tipo de atención mantiene el
-              mismo color.
-            </p>
+                  <Tooltip
+                    content={({ active, payload, label }) => {
+                      if (active && payload && payload.length) {
+                        const groupedData: Record<string, any[]> = {};
+                        payload.forEach((entry: any) => {
+                          const year = entry.dataKey.split("-")[0];
+                          if (!groupedData[year]) {
+                            groupedData[year] = [];
+                          }
+                          groupedData[year].push(entry);
+                        });
+
+                        return (
+                          <div
+                            style={{
+                              backgroundColor: "#ffffff",
+                              padding: "16px",
+                              border: "1px solid #e5e7eb",
+                              borderRadius: "8px",
+                              boxShadow:
+                                "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                              maxWidth: "320px",
+                              fontSize: "14px",
+                              color: "#1f2937",
+                              zIndex: 1000,
+                            }}
+                          >
+                            <p
+                              style={{
+                                fontWeight: "600",
+                                fontSize: "18px",
+                                marginBottom: "12px",
+                                color: "#1f2937",
+                              }}
+                            >
+                              {`${label}`}
+                            </p>
+                            {Object.entries(groupedData)
+                              .sort(([a], [b]) => a.localeCompare(b))
+                              .map(([year, entries]) => {
+                                const yearTotal = entries
+                                  .filter((entry: any) => entry.value > 0)
+                                  .reduce(
+                                    (sum: number, entry: any) =>
+                                      sum + entry.value,
+                                    0
+                                  );
+
+                                return (
+                                  <div
+                                    key={year}
+                                    style={{ marginBottom: "12px" }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                        marginBottom: "8px",
+                                      }}
+                                    >
+                                      <h4
+                                        style={{
+                                          fontWeight: "600",
+                                          color: "#1e40af",
+                                          margin: 0,
+                                        }}
+                                      >
+                                        {year}
+                                      </h4>
+                                      <span
+                                        style={{
+                                          fontSize: "12px",
+                                          fontWeight: "700",
+                                          color: "#374151",
+                                          backgroundColor: "#f3f4f6",
+                                          padding: "4px 8px",
+                                          borderRadius: "4px",
+                                        }}
+                                      >
+                                        Total: $
+                                        {yearTotal.toLocaleString("es-MX", {
+                                          maximumFractionDigits: 0,
+                                        })}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      {entries
+                                        .filter((entry: any) => entry.value > 0)
+                                        .sort((a: any, b: any) =>
+                                          a.dataKey.localeCompare(b.dataKey)
+                                        )
+                                        .map((entry: any, index: number) => {
+                                          const treatment =
+                                            entry.dataKey
+                                              .split("-")[1]
+                                              ?.toLowerCase() || "default";
+                                          const getColorForTreatment = (
+                                            t: string
+                                          ) => {
+                                            const colorMap: Record<
+                                              string,
+                                              string
+                                            > = {
+                                              res: "#2563eb",
+                                              odg: "#dc2626",
+                                              otd: "#059669",
+                                              pro: "#d97706",
+                                              exo: "#7c3aed",
+                                              end: "#db2777",
+                                              pri: "#0891b2",
+                                              exq: "#65a30d",
+                                              otp: "#c2410c",
+                                              odp: "#7c2d12",
+                                              per: "#be185d",
+                                              imp: "#1e40af",
+                                              prd: "#0f766e",
+                                              odq: "#991b1b",
+                                              dud: "#6b7280",
+                                              rtr: "#374151",
+                                              est: "#ec4899",
+                                              nca: "#9ca3af",
+                                              int: "#f59e0b",
+                                              pul: "#8b5cf6",
+                                            };
+                                            return (
+                                              colorMap[t.toLowerCase()] ||
+                                              "#8884d8"
+                                            );
+                                          };
+                                          return (
+                                            <p
+                                              key={index}
+                                              style={{
+                                                fontSize: "14px",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                margin: "4px 0",
+                                                color: "#1f2937",
+                                              }}
+                                            >
+                                              <span
+                                                style={{
+                                                  display: "inline-block",
+                                                  width: "8px",
+                                                  height: "8px",
+                                                  borderRadius: "50%",
+                                                  marginRight: "8px",
+                                                  backgroundColor:
+                                                    getColorForTreatment(
+                                                      treatment
+                                                    ),
+                                                }}
+                                              ></span>
+                                              <span
+                                                style={{
+                                                  fontWeight: "500",
+                                                  color: "#1f2937",
+                                                }}
+                                              >
+                                                {entry.dataKey.split("-")[1]}:
+                                              </span>
+                                              <span
+                                                style={{
+                                                  marginLeft: "4px",
+                                                  color: "#1f2937",
+                                                }}
+                                              >
+                                                $
+                                                {entry.value.toLocaleString(
+                                                  "es-MX",
+                                                  { maximumFractionDigits: 0 }
+                                                )}
+                                              </span>
+                                            </p>
+                                          );
+                                        })}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                  {orderedTreatmentsForSales.map((treatment) => (
+                    <Bar
+                      key={treatment}
+                      dataKey={`2023-${treatment}`}
+                      stackId="2023"
+                      fill={treatmentColors[treatment] || "#8884d8"}
+                      fillOpacity={0.8}
+                      name={`${treatment}`}
+                    />
+                  ))}
+                  {years.includes("2024") &&
+                    orderedTreatmentsForSales.map((treatment) => (
+                      <Bar
+                        key={`2024-${treatment}`}
+                        dataKey={`2024-${treatment}`}
+                        stackId="2024"
+                        fill={treatmentColors[treatment] || "#8884d8"}
+                        fillOpacity={0.8}
+                        name={`${treatment}`}
+                      />
+                    ))}
+                  {years.includes("2025") &&
+                    orderedTreatmentsForSales.map((treatment) => (
+                      <Bar
+                        key={`2025-${treatment}`}
+                        dataKey={`2025-${treatment}`}
+                        stackId="2025"
+                        fill={treatmentColors[treatment] || "#8884d8"}
+                        fillOpacity={0.8}
+                        name={`${treatment}`}
+                      />
+                    ))}
+                </BarChart>
+              </ResponsiveContainer>
+              <div className="mt-4 text-sm text-gray-600 text-center">
+                <p>
+                  💡 <strong>Hover:</strong> Pasa el mouse sobre las barras para
+                  ver ingresos organizados por año. Cada tipo de atención
+                  mantiene el mismo color.
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,0 +1,88 @@
+{
+  "migrationId": "procedure-code-sync-2025-12-18",
+  "timestamp": "2025-12-18T03:59:10.115Z",
+  "mode": "dry-run",
+  "summary": {
+    "totalProcessed": 10,
+    "updated": 0,
+    "noMatch": 10,
+    "multipleMatches": 0,
+    "alreadySynced": 0,
+    "errors": 0,
+    "byProcedureCode": {}
+  },
+  "noMatchRecords": [
+    {
+      "_id": "w8fFQyrLH_fd",
+      "date": "2023-07-04",
+      "patientId": "P#17CcD_OYY0lv",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "shF2_A6xJGTf",
+      "date": "2023-09-23",
+      "patientId": "P#17CcD_OYY0lv",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "brML6sg5F1Po",
+      "date": "2024-05-14",
+      "patientId": "P#17CcD_OYY0lv",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "hqfiNZoElBYj",
+      "date": "2024-05-15",
+      "patientId": "P#17CcD_OYY0lv",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "E9J6niBzub-w",
+      "date": "2024-06-15",
+      "patientId": "P#17CcD_OYY0lv",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "VamCZCftYoCk",
+      "date": "2023-05-25",
+      "patientId": "P#L9O7jzLsc0Et",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "_5l6WvDm2YIR",
+      "date": "2023-06-02",
+      "patientId": "P#L9O7jzLsc0Et",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "902lvOFLCmBQ",
+      "date": "2024-05-23",
+      "patientId": "P#5RnuXGOIfvyf",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "kMyjVD2m0naC",
+      "date": "2024-06-01",
+      "patientId": "P#5RnuXGOIfvyf",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "prv5MYqEhFY_",
+      "date": "2024-07-20",
+      "patientId": "P#5RnuXGOIfvyf",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    }
+  ],
+  "multipleMatchRecords": [],
+  "errors": []
+}

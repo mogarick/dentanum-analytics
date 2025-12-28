@@ -1,0 +1,64 @@
+{
+  "migrationId": "procedure-code-sync-2025-12-18",
+  "timestamp": "2025-12-18T04:01:20.618Z",
+  "mode": "dry-run",
+  "summary": {
+    "totalProcessed": 50,
+    "updated": 18,
+    "noMatch": 3,
+    "multipleMatches": 0,
+    "alreadySynced": 29,
+    "errors": 0,
+    "byProcedureCode": {
+      "ODG": {
+        "updated": 3,
+        "noMatch": 0
+      },
+      "PRI": {
+        "updated": 3,
+        "noMatch": 0
+      },
+      "ODP": {
+        "updated": 5,
+        "noMatch": 0
+      },
+      "IMP": {
+        "updated": 2,
+        "noMatch": 0
+      },
+      "EXQ": {
+        "updated": 1,
+        "noMatch": 0
+      },
+      "RES": {
+        "updated": 4,
+        "noMatch": 0
+      }
+    }
+  },
+  "noMatchRecords": [
+    {
+      "_id": "VamCZCftYoCk",
+      "date": "2023-05-25",
+      "patientId": "P#L9O7jzLsc0Et",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "jpGgdNGeV_QO",
+      "date": "2024-03-20",
+      "patientId": "P#JTVaKH97Zjw9",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "XmgJPqsEg1Rd",
+      "date": "2025-04-04",
+      "patientId": "P#JTVaKH97Zjw9",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    }
+  ],
+  "multipleMatchRecords": [],
+  "errors": []
+}

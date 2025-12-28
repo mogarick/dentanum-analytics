@@ -19,3 +19,8 @@ export interface TreatmentDataMongoResponse {
   count: number;
 }
 
+
+
+
+
+

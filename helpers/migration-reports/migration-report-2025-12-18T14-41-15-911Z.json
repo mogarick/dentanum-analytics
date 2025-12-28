@@ -1,0 +1,1027 @@
+{
+  "migrationId": "procedure-code-sync-2025-12-18",
+  "timestamp": "2025-12-18T14:41:15.911Z",
+  "mode": "dry-run",
+  "summary": {
+    "totalProcessed": 1576,
+    "updated": 493,
+    "noMatch": 107,
+    "multipleMatches": 11,
+    "alreadySynced": 965,
+    "errors": 0,
+    "byProcedureCode": {
+      "ODG": {
+        "updated": 79,
+        "noMatch": 0
+      },
+      "PRI": {
+        "updated": 28,
+        "noMatch": 0
+      },
+      "ODP": {
+        "updated": 55,
+        "noMatch": 0
+      },
+      "IMP": {
+        "updated": 5,
+        "noMatch": 0
+      },
+      "EXQ": {
+        "updated": 49,
+        "noMatch": 0
+      },
+      "RES": {
+        "updated": 77,
+        "noMatch": 0
+      },
+      "EXO": {
+        "updated": 42,
+        "noMatch": 0
+      },
+      "PRO": {
+        "updated": 35,
+        "noMatch": 0
+      },
+      "OTP": {
+        "updated": 32,
+        "noMatch": 0
+      },
+      "OTD": {
+        "updated": 13,
+        "noMatch": 0
+      },
+      "END": {
+        "updated": 60,
+        "noMatch": 0
+      },
+      "PER": {
+        "updated": 12,
+        "noMatch": 0
+      },
+      "ODQ": {
+        "updated": 3,
+        "noMatch": 0
+      },
+      "DUD": {
+        "updated": 1,
+        "noMatch": 0
+      },
+      "RTR": {
+        "updated": 2,
+        "noMatch": 0
+      }
+    }
+  },
+  "noMatchRecords": [
+    {
+      "_id": "VamCZCftYoCk",
+      "date": "2023-05-25",
+      "patientId": "P#L9O7jzLsc0Et",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "jpGgdNGeV_QO",
+      "date": "2024-03-20",
+      "patientId": "P#JTVaKH97Zjw9",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "XmgJPqsEg1Rd",
+      "date": "2025-04-04",
+      "patientId": "P#JTVaKH97Zjw9",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "bVVMI6tpIBaT",
+      "date": "2025-06-19",
+      "patientId": "P#GAfmyML9wej_",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "TPbh_SiCgwj7",
+      "date": "2024-11-12",
+      "patientId": "P#YuuW9oH45z_a",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "xwCL8678Juuv",
+      "date": "2023-10-03",
+      "patientId": "P#MV11Rk7lQeLm",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "xKsStg9Jfu6t",
+      "date": "2024-05-22",
+      "patientId": "P#T-BE0VXaoSk7",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "n69nt6LU16fC",
+      "date": "2024-05-28",
+      "patientId": "P#gjq9fBW7G6Jb",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "iGFUnfXORUJb",
+      "date": "2023-03-14",
+      "patientId": "P#LwiLsi8nSbN5",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "9Zsk8ub-Kc_y",
+      "date": "2025-04-10",
+      "patientId": "P#_Yu1vskpYQKo",
+      "currentCode": "EXQ",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "lJZ6rYhLvewh",
+      "date": "2025-04-22",
+      "patientId": "P#_Yu1vskpYQKo",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "4-MK0lO363MF",
+      "date": "2024-07-19",
+      "patientId": "P#zdZNLFVY5KzG",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "4Uiax3EVeYB6",
+      "date": "2025-08-22",
+      "patientId": "P#zdZNLFVY5KzG",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "XJJdEqOGGJFi",
+      "date": "2023-03-01",
+      "patientId": "P#1XTRslmnosQP",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "V-xI7xqaRmeo",
+      "date": "2024-05-30",
+      "patientId": "P#0oYfMFSEb10M",
+      "currentCode": "PER",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "lHeb5BC_wfu-",
+      "date": "2024-04-23",
+      "patientId": "P#3Qmi0OMWj2QB",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "nTnqqd_Ag9Bm",
+      "date": "2024-07-09",
+      "patientId": "P#3Qmi0OMWj2QB",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "vS8IybCnYTAS",
+      "date": "2023-03-14",
+      "patientId": null,
+      "currentCode": "OTD",
+      "reason": "No patientId found via personsData lookup"
+    },
+    {
+      "_id": "XyAS2sHjj8Yp",
+      "date": "2023-03-11",
+      "patientId": "P#2MlDxlSDyeXl",
+      "currentCode": "EXQ",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "x5zaknkfJ9fs",
+      "date": "2024-05-03",
+      "patientId": "P#K4KVy0RWveES",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "mCgUwhV9zaeA",
+      "date": "2025-07-21",
+      "patientId": "P#XNF9j1mcd14T",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "YGtZD6Og7Oux",
+      "date": "2023-03-13",
+      "patientId": "P#3xDZwZjUFZcx",
+      "currentCode": "EXQ",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "NIdNCBBKtIqi",
+      "date": "2024-03-14",
+      "patientId": "P#jgkLPqhMOToB",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "7JXyGzsnXz5K",
+      "date": "2023-03-04",
+      "patientId": "P#kfsKjKE6yffR",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "7RTzz5h42FvI",
+      "date": "2025-09-06",
+      "patientId": "P#GW-UNFzEOZ-q",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "yNA4hHBbqwZd",
+      "date": "2025-09-06",
+      "patientId": "P#GW-UNFzEOZ-q",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "9eUFyVWDn9P2",
+      "date": "2024-09-01",
+      "patientId": "P#2K1pNxOmmEqN",
+      "currentCode": "OTP",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "usFvUcDX1qTU",
+      "date": "2023-07-24",
+      "patientId": "P#WNdjATtVpMhR",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "PZn-twfPXit0",
+      "date": "2023-05-14",
+      "patientId": "P#e067DEIAg55x",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ECyAzvf9_Eie",
+      "date": "2024-03-26",
+      "patientId": "P#VXu8nUScSfg2",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "pOxdsznBXTxY",
+      "date": "2024-10-08",
+      "patientId": "P#kBIgw8rDLste",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "7rTdCaWti-Zc",
+      "date": "2024-10-31",
+      "patientId": "P#kBIgw8rDLste",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ee2RsJy4bnrU",
+      "date": "2024-03-19",
+      "patientId": "P#g0mu0Vmw4r6E",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "TY7v921qnCBU",
+      "date": "2024-05-21",
+      "patientId": "P#zWJr5nVCDEZB",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "frgyM3W8Vmjf",
+      "date": "2025-05-23",
+      "patientId": "P#iA0Z-2tjtlxL",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "5NoE6gmEDv-g",
+      "date": "2024-03-12",
+      "patientId": "P#rC96siSaAqEm",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "UcNwqsthnKfB",
+      "date": "2024-03-22",
+      "patientId": "P#rC96siSaAqEm",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "hIAeZKngyrBA",
+      "date": "2023-05-17",
+      "patientId": "P#goFRDRJVHNq-",
+      "currentCode": "PUL",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "-HbVZ7poM-Ls",
+      "date": "2023-06-20",
+      "patientId": "P#vYj2WgMdeEdj",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "bedl33WRdaHM",
+      "date": "2023-11-14",
+      "patientId": "P#RVXKc2DG25MO",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "YMCWa34TXntw",
+      "date": "2024-07-11",
+      "patientId": "P#fMhdZPES7XHY",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "L9vEk-Dec_Hc",
+      "date": "2024-07-25",
+      "patientId": "P#fMhdZPES7XHY",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "SKogLc6QinzM",
+      "date": "2024-11-16",
+      "patientId": "P#ZfbWooGhl6xX",
+      "currentCode": "EXQ",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "1RKYiknFPnAV",
+      "date": "2023-03-14",
+      "patientId": "P#gkPojQmkgpIQ",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "IiS88zYANXYw",
+      "date": "2024-08-20",
+      "patientId": "P#gkPojQmkgpIQ",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "hNjnsFGsZ7JW",
+      "date": "2024-10-02",
+      "patientId": "P#gkPojQmkgpIQ",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "FsL38E2a-WLk",
+      "date": "2024-10-02",
+      "patientId": "P#gkPojQmkgpIQ",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "nZqXQo15sABh",
+      "date": "2024-08-27",
+      "patientId": "P#8as0KvCIOtKZ",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "NaDY8amz1D0n",
+      "date": "2024-03-05",
+      "patientId": "P#VoBUpfARQvtb",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "JCQ44cz9uvwF",
+      "date": "2024-03-05",
+      "patientId": "P#VoBUpfARQvtb",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "mDZld1IYI6nS",
+      "date": "2024-03-19",
+      "patientId": "P#VoBUpfARQvtb",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "gSq0bnLi6PKb",
+      "date": "2024-04-24",
+      "patientId": "P#P2aKG7CHnldJ",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ZIn2Plim2V-h",
+      "date": "2024-04-09",
+      "patientId": "P#YDZhGgG82gGD",
+      "currentCode": "INT",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "98E8VgZja7kI",
+      "date": "2025-03-04",
+      "patientId": "P#3dnqt4-oKSlA",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "OwKufmK3QFvl",
+      "date": "2025-03-31",
+      "patientId": "P#3dnqt4-oKSlA",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "tSY_AxDmtwWE",
+      "date": "2025-10-21",
+      "patientId": "P#FxNnKPbCZO8C",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "qRHUJzUamqEJ",
+      "date": "2023-12-07",
+      "patientId": "P#pLyxb9_mCaI3",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "QvBfB8NqSWkg",
+      "date": "2023-12-11",
+      "patientId": "P#pLyxb9_mCaI3",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "COhW8IGzCsQ3",
+      "date": "2024-01-19",
+      "patientId": "P#pLyxb9_mCaI3",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "6bPfeAA8nFYK",
+      "date": "2024-04-17",
+      "patientId": "P#pLyxb9_mCaI3",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "YYmmCdOLFKYW",
+      "date": "2023-12-01",
+      "patientId": "P#7buDoozz4sFW",
+      "currentCode": "OTP",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "4CD5reC2RQg6",
+      "date": "2023-03-04",
+      "patientId": "P#4dVZrbLbkijk",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "_tli7R4J_Coq",
+      "date": "2025-02-06",
+      "patientId": "P#4dVZrbLbkijk",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "oK0qrg8NHEyb",
+      "date": "2023-03-15",
+      "patientId": "P#RrHiLdbx3QwL",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ro4eTsWPynqJ",
+      "date": "2023-02-27",
+      "patientId": "P#EfKm9dMwRo40",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "_HSS0O5G8nW9",
+      "date": "2024-11-16",
+      "patientId": "P#_4sWqHWL-WXm",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "OCJcL827O7FV",
+      "date": "2024-11-16",
+      "patientId": "P#_4sWqHWL-WXm",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "PvquRpQCiuS0",
+      "date": "2025-10-21",
+      "patientId": "P#In7L9FFglREO",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "YOCjDnwknUWR",
+      "date": "2025-04-05",
+      "patientId": "P#6WiJ5uvzUxLS",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "AXn4X5S1Q8Ff",
+      "date": "2024-05-03",
+      "patientId": "P#a2b1jc0TjaEg",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "7Bo466CT1Z_R",
+      "date": "2023-10-21",
+      "patientId": "P#EpJ63nSKBzBN",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "PZnhb1a5NZoL",
+      "date": "2025-09-22",
+      "patientId": "P#y8wSeH0EcvUK",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "K-h_v0jvcAsP",
+      "date": "2023-06-25",
+      "patientId": "P#y1wRm3KCyceB",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "CSsywshluojU",
+      "date": "2024-04-14",
+      "patientId": "P#2BKM_spaG7gW",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "UW74zNDOQB6p",
+      "date": "2024-04-14",
+      "patientId": "P#2BKM_spaG7gW",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "DGYgwHf7SWc2",
+      "date": "2025-08-20",
+      "patientId": "P#ct-iftEzFW5z",
+      "currentCode": "EXQ",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "sfJll7rLrRV-",
+      "date": "2023-04-23",
+      "patientId": "P#qx7tYruEFD8x",
+      "currentCode": "INT",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "2j-ro8GFAkUN",
+      "date": "2025-05-21",
+      "patientId": "P#r4EQj2yYOgp7",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "FP-kUOPvf4oU",
+      "date": "2025-05-21",
+      "patientId": "P#r4EQj2yYOgp7",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "2gPGMv-OJ2qU",
+      "date": "2023-08-03",
+      "patientId": "P#FJ5IQpB8JkBL",
+      "currentCode": "INT",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "7mMD6ada2yq_",
+      "date": "2025-02-28",
+      "patientId": "P#Iqp7VDzmzEnS",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "jVivkqCzRQqW",
+      "date": "2024-03-14",
+      "patientId": "P#06Ul2trMRv1V",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "SjIL4eWnBV0o",
+      "date": "2024-01-19",
+      "patientId": "P#jIlvbkb2dgKk",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "Vi_7DUOoxBMJ",
+      "date": "2024-05-09",
+      "patientId": "P#jIlvbkb2dgKk",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "rZI2upeL1CnJ",
+      "date": "2025-10-10",
+      "patientId": "P#jIlvbkb2dgKk",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "0Q9_FEiY5kW3",
+      "date": "2024-08-27",
+      "patientId": "P#y19j596x52GF",
+      "currentCode": "IMP",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "pA7-ugtOa7Xc",
+      "date": "2024-08-27",
+      "patientId": "P#y19j596x52GF",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "w9by6VZhsHxq",
+      "date": "2024-01-24",
+      "patientId": "P#z_gEX9hR-UUE",
+      "currentCode": "INT",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "UVtxE_JiY_n0",
+      "date": "2023-12-04",
+      "patientId": "P#-AOolCx6Ehtf",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "T8n8c3wxj3wI",
+      "date": "2023-03-15",
+      "patientId": "P#CygxndwQkj7Z",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ei8qVMnkM7sz",
+      "date": "2024-01-09",
+      "patientId": "P#K6KMv5mWLQUG",
+      "currentCode": "PRI",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "gosBj00r8XMI",
+      "date": "2024-03-07",
+      "patientId": "P#K6KMv5mWLQUG",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "wmkn3zSDNQ2l",
+      "date": "2023-03-11",
+      "patientId": "P#ZQVYgAft2r6v",
+      "currentCode": "EXO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "VyyB0BeyKYtb",
+      "date": "2024-04-13",
+      "patientId": "P#gKMC0TKC8fxU",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "WbAblkwrDEvj",
+      "date": "2024-10-08",
+      "patientId": "P#3bmhGgCjHAKe",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "yRqYCNaTcyoW",
+      "date": "2023-03-04",
+      "patientId": "P#jj1nWIUs9xyW",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "39XVrewxhi0G",
+      "date": "2024-10-23",
+      "patientId": "P#grDTAIHPG2C1",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "0z0oyme9Gu9R",
+      "date": "2024-01-20",
+      "patientId": "P#2O9Lh3Z9SL2L",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "h_MaQ55xBKfx",
+      "date": "2024-12-21",
+      "patientId": "P#uxPfpJYXDsm3",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "9hxdyOTBo49y",
+      "date": "2024-01-24",
+      "patientId": "P#tthhAEChKdxb",
+      "currentCode": "END",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "OH9lfRuRmGKO",
+      "date": "2024-01-24",
+      "patientId": "P#tthhAEChKdxb",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "09veYaIgAQz6",
+      "date": "2024-09-13",
+      "patientId": "P#MIYORcQKQWmN",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "KRxx-vIkRJjf",
+      "date": "2025-10-24",
+      "patientId": "P#y6ZtQtZCk6_w",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ZDhy-He_S7sj",
+      "date": "2024-03-04",
+      "patientId": "P#8dbtrimh_DC3",
+      "currentCode": "OTD",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "T7lGoUIVooEU",
+      "date": "2024-01-19",
+      "patientId": "P#wKRtVfliEKbN",
+      "currentCode": "ODG",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "ksTSW1FzIoXM",
+      "date": "2025-05-10",
+      "patientId": "P#u6DQwrvaEK6e",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    },
+    {
+      "_id": "gFnRcqMPBqPc",
+      "date": "2024-01-25",
+      "patientId": "P#LqyGOxfj08Rb",
+      "currentCode": "PRO",
+      "reason": "No matching attention found for same patient + same day"
+    }
+  ],
+  "multipleMatchRecords": [
+    {
+      "_id": "GsAQk3ffRc1V",
+      "date": "2024-10-03",
+      "patientId": "P#CZZ-g6dJzeuv",
+      "currentCode": "ODG",
+      "possibleMatches": [
+        {
+          "attentionId": "P#CZZ-g6dJzeuv_HS#455Ml3m9YZNb",
+          "code": "ODG",
+          "description": "Tratamiento / Atención de Odontología General"
+        },
+        {
+          "attentionId": "P#CZZ-g6dJzeuv_HS#__GPG8lW6ZH1",
+          "code": "ODG",
+          "description": "Tratamiento / Atención de Odontología General"
+        }
+      ]
+    },
+    {
+      "_id": "kleYTfbBD9Xq",
+      "date": "2023-11-16",
+      "patientId": "P#kylXZ0kZKDo6",
+      "currentCode": "ODG",
+      "possibleMatches": [
+        {
+          "attentionId": "P#kylXZ0kZKDo6_HS#xPS98HtWLHyc",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        },
+        {
+          "attentionId": "P#kylXZ0kZKDo6_HS#gzrGrBCnPm9T",
+          "code": "IMP",
+          "description": "Tratamiento / Atención de Implantes"
+        }
+      ]
+    },
+    {
+      "_id": "BKRtOYN8yPSw",
+      "date": "2023-11-17",
+      "patientId": "P#kylXZ0kZKDo6",
+      "currentCode": "IMP",
+      "possibleMatches": [
+        {
+          "attentionId": "P#kylXZ0kZKDo6_HS#xPS98HtWLHyc",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        },
+        {
+          "attentionId": "P#kylXZ0kZKDo6_HS#gzrGrBCnPm9T",
+          "code": "IMP",
+          "description": "Tratamiento / Atención de Implantes"
+        }
+      ]
+    },
+    {
+      "_id": "CnbyV4jr0ekB",
+      "date": "2024-03-12",
+      "patientId": "P#CT0aslzYctxy",
+      "currentCode": "RES",
+      "possibleMatches": [
+        {
+          "attentionId": "P#CT0aslzYctxy_HS#zRSm5O9d3TLp",
+          "code": "RES",
+          "description": "Tratamiento / Atención de Restauración Dental"
+        },
+        {
+          "attentionId": "P#CT0aslzYctxy_HS#o8Q5jPm9BwC7",
+          "code": "RES",
+          "description": "Tratamiento / Atención de Restauración Dental"
+        }
+      ]
+    },
+    {
+      "_id": "7BENC6v3w2Gg",
+      "date": "2023-09-20",
+      "patientId": "P#VoBUpfARQvtb",
+      "currentCode": "RES",
+      "possibleMatches": [
+        {
+          "attentionId": "P#VoBUpfARQvtb_HS#koH-SvtlewUH",
+          "code": "ODG",
+          "description": "Tratamiento / Atención de Odontología General"
+        },
+        {
+          "attentionId": "P#VoBUpfARQvtb_HS#_tFq8qLqHHJM",
+          "code": "RES",
+          "description": "Tratamiento / Atención de Restauración Dental"
+        }
+      ]
+    },
+    {
+      "_id": "I7aJxfv__15m",
+      "date": "2023-03-25",
+      "patientId": "P#QtwKVnYr6nQG",
+      "currentCode": "OTD",
+      "possibleMatches": [
+        {
+          "attentionId": "P#QtwKVnYr6nQG_HS#oQ_1FNBmvLe2",
+          "code": "OTD",
+          "description": "Tratamiento / Atención de Ortodoncia"
+        },
+        {
+          "attentionId": "P#QtwKVnYr6nQG_HS#FVfaYycbaFrX",
+          "code": "OTD",
+          "description": "Tratamiento / Atención de Ortodoncia"
+        }
+      ]
+    },
+    {
+      "_id": "bvWy2WY6-WD_",
+      "date": "2023-03-25",
+      "patientId": "P#QtwKVnYr6nQG",
+      "currentCode": "OTD",
+      "possibleMatches": [
+        {
+          "attentionId": "P#QtwKVnYr6nQG_HS#oQ_1FNBmvLe2",
+          "code": "OTD",
+          "description": "Tratamiento / Atención de Ortodoncia"
+        },
+        {
+          "attentionId": "P#QtwKVnYr6nQG_HS#FVfaYycbaFrX",
+          "code": "OTD",
+          "description": "Tratamiento / Atención de Ortodoncia"
+        }
+      ]
+    },
+    {
+      "_id": "o8gKmuQN-9YP",
+      "date": "2025-03-11",
+      "patientId": "P#3unj-jmot4q0",
+      "currentCode": "END",
+      "possibleMatches": [
+        {
+          "attentionId": "P#3unj-jmot4q0_HS#Q60c04QC21S_",
+          "code": "END",
+          "description": "Tratamiento / Atención de Endodoncia"
+        },
+        {
+          "attentionId": "P#3unj-jmot4q0_HS#_FyATl64ZBBU",
+          "code": "END",
+          "description": "Tratamiento / Atención de Endodoncia"
+        }
+      ]
+    },
+    {
+      "_id": "blja8CtJb-et",
+      "date": "2024-12-03",
+      "patientId": "P#r4EQj2yYOgp7",
+      "currentCode": "ODG",
+      "possibleMatches": [
+        {
+          "attentionId": "P#r4EQj2yYOgp7_HS#7L9oI_QsvdCf",
+          "code": "ODG",
+          "description": "Tratamiento / Atención de Odontología General"
+        },
+        {
+          "attentionId": "P#r4EQj2yYOgp7_HS#YhQ0E_ecYu4o",
+          "code": "ODG",
+          "description": "Tratamiento / Atención de Odontología General"
+        }
+      ]
+    },
+    {
+      "_id": "AGPswaniOxYB",
+      "date": "2024-04-22",
+      "patientId": "P#y19j596x52GF",
+      "currentCode": "ODG",
+      "possibleMatches": [
+        {
+          "attentionId": "P#y19j596x52GF_HS#nqkBKGu2vEbF",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        },
+        {
+          "attentionId": "P#y19j596x52GF_HS#IBf6mKDi9lRO",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        }
+      ]
+    },
+    {
+      "_id": "WVwbTW4liDGL",
+      "date": "2024-04-23",
+      "patientId": "P#y19j596x52GF",
+      "currentCode": "PRO",
+      "possibleMatches": [
+        {
+          "attentionId": "P#y19j596x52GF_HS#nqkBKGu2vEbF",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        },
+        {
+          "attentionId": "P#y19j596x52GF_HS#IBf6mKDi9lRO",
+          "code": "PRO",
+          "description": "Tratamiento / Atención de Prótesis Dental"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

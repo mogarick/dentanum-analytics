@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "VamCZCftYoCk",
+    "date": "2023-05-25",
+    "patientId": "P#L9O7jzLsc0Et",
+    "currentCode": "RES",
+    "reason": "No matching attention found for same patient + same day"
+  },
+  {
+    "_id": "jpGgdNGeV_QO",
+    "date": "2024-03-20",
+    "patientId": "P#JTVaKH97Zjw9",
+    "currentCode": "RES",
+    "reason": "No matching attention found for same patient + same day"
+  },
+  {
+    "_id": "XmgJPqsEg1Rd",
+    "date": "2025-04-04",
+    "patientId": "P#JTVaKH97Zjw9",
+    "currentCode": "ODG",
+    "reason": "No matching attention found for same patient + same day"
+  }
+]

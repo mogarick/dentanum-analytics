@@ -5,3 +5,8 @@ export default {
   ssr: true, // Framework mode con SSR
 } satisfies Config;
 
+
+
+
+
+

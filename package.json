@@ -12,7 +12,12 @@
     "migrate:typo:execute": "tsx src/scripts/migrate-typo-field.ts --execute",
     "migrate:typo:remove": "tsx src/scripts/migrate-typo-field.ts --execute --remove-typo",
     "reclassify:pul": "tsx src/scripts/reclassify-pul-cases.ts",
-    "reclassify:pul:execute": "tsx src/scripts/reclassify-pul-cases.ts --execute"
+    "reclassify:pul:execute": "tsx src/scripts/reclassify-pul-cases.ts --execute",
+    "sync:codes": "tsx src/scripts/sync-procedure-codes.ts",
+    "sync:codes:execute": "tsx src/scripts/sync-procedure-codes.ts --execute",
+    "sync:codes:test": "tsx src/scripts/sync-procedure-codes.ts --test-limit=10",
+    "sync:codes:rollback": "tsx src/scripts/sync-procedure-codes.ts --rollback",
+    "sync:codes:report": "tsx src/scripts/sync-procedure-codes.ts --report"
   },
   "dependencies": {
     "@react-router/node": "^7.10.1",

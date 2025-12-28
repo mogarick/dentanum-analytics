@@ -1,0 +1,200 @@
+[
+  {
+    "_id": "GsAQk3ffRc1V",
+    "date": "2024-10-03",
+    "patientId": "P#CZZ-g6dJzeuv",
+    "currentCode": "ODG",
+    "possibleMatches": [
+      {
+        "attentionId": "P#CZZ-g6dJzeuv_HS#455Ml3m9YZNb",
+        "code": "ODG",
+        "description": "Tratamiento / Atención de Odontología General"
+      },
+      {
+        "attentionId": "P#CZZ-g6dJzeuv_HS#__GPG8lW6ZH1",
+        "code": "ODG",
+        "description": "Tratamiento / Atención de Odontología General"
+      }
+    ]
+  },
+  {
+    "_id": "kleYTfbBD9Xq",
+    "date": "2023-11-16",
+    "patientId": "P#kylXZ0kZKDo6",
+    "currentCode": "ODG",
+    "possibleMatches": [
+      {
+        "attentionId": "P#kylXZ0kZKDo6_HS#xPS98HtWLHyc",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      },
+      {
+        "attentionId": "P#kylXZ0kZKDo6_HS#gzrGrBCnPm9T",
+        "code": "IMP",
+        "description": "Tratamiento / Atención de Implantes"
+      }
+    ]
+  },
+  {
+    "_id": "BKRtOYN8yPSw",
+    "date": "2023-11-17",
+    "patientId": "P#kylXZ0kZKDo6",
+    "currentCode": "IMP",
+    "possibleMatches": [
+      {
+        "attentionId": "P#kylXZ0kZKDo6_HS#xPS98HtWLHyc",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      },
+      {
+        "attentionId": "P#kylXZ0kZKDo6_HS#gzrGrBCnPm9T",
+        "code": "IMP",
+        "description": "Tratamiento / Atención de Implantes"
+      }
+    ]
+  },
+  {
+    "_id": "CnbyV4jr0ekB",
+    "date": "2024-03-12",
+    "patientId": "P#CT0aslzYctxy",
+    "currentCode": "RES",
+    "possibleMatches": [
+      {
+        "attentionId": "P#CT0aslzYctxy_HS#zRSm5O9d3TLp",
+        "code": "RES",
+        "description": "Tratamiento / Atención de Restauración Dental"
+      },
+      {
+        "attentionId": "P#CT0aslzYctxy_HS#o8Q5jPm9BwC7",
+        "code": "RES",
+        "description": "Tratamiento / Atención de Restauración Dental"
+      }
+    ]
+  },
+  {
+    "_id": "7BENC6v3w2Gg",
+    "date": "2023-09-20",
+    "patientId": "P#VoBUpfARQvtb",
+    "currentCode": "RES",
+    "possibleMatches": [
+      {
+        "attentionId": "P#VoBUpfARQvtb_HS#koH-SvtlewUH",
+        "code": "ODG",
+        "description": "Tratamiento / Atención de Odontología General"
+      },
+      {
+        "attentionId": "P#VoBUpfARQvtb_HS#_tFq8qLqHHJM",
+        "code": "RES",
+        "description": "Tratamiento / Atención de Restauración Dental"
+      }
+    ]
+  },
+  {
+    "_id": "I7aJxfv__15m",
+    "date": "2023-03-25",
+    "patientId": "P#QtwKVnYr6nQG",
+    "currentCode": "OTD",
+    "possibleMatches": [
+      {
+        "attentionId": "P#QtwKVnYr6nQG_HS#oQ_1FNBmvLe2",
+        "code": "OTD",
+        "description": "Tratamiento / Atención de Ortodoncia"
+      },
+      {
+        "attentionId": "P#QtwKVnYr6nQG_HS#FVfaYycbaFrX",
+        "code": "OTD",
+        "description": "Tratamiento / Atención de Ortodoncia"
+      }
+    ]
+  },
+  {
+    "_id": "bvWy2WY6-WD_",
+    "date": "2023-03-25",
+    "patientId": "P#QtwKVnYr6nQG",
+    "currentCode": "OTD",
+    "possibleMatches": [
+      {
+        "attentionId": "P#QtwKVnYr6nQG_HS#oQ_1FNBmvLe2",
+        "code": "OTD",
+        "description": "Tratamiento / Atención de Ortodoncia"
+      },
+      {
+        "attentionId": "P#QtwKVnYr6nQG_HS#FVfaYycbaFrX",
+        "code": "OTD",
+        "description": "Tratamiento / Atención de Ortodoncia"
+      }
+    ]
+  },
+  {
+    "_id": "o8gKmuQN-9YP",
+    "date": "2025-03-11",
+    "patientId": "P#3unj-jmot4q0",
+    "currentCode": "END",
+    "possibleMatches": [
+      {
+        "attentionId": "P#3unj-jmot4q0_HS#Q60c04QC21S_",
+        "code": "END",
+        "description": "Tratamiento / Atención de Endodoncia"
+      },
+      {
+        "attentionId": "P#3unj-jmot4q0_HS#_FyATl64ZBBU",
+        "code": "END",
+        "description": "Tratamiento / Atención de Endodoncia"
+      }
+    ]
+  },
+  {
+    "_id": "blja8CtJb-et",
+    "date": "2024-12-03",
+    "patientId": "P#r4EQj2yYOgp7",
+    "currentCode": "ODG",
+    "possibleMatches": [
+      {
+        "attentionId": "P#r4EQj2yYOgp7_HS#7L9oI_QsvdCf",
+        "code": "ODG",
+        "description": "Tratamiento / Atención de Odontología General"
+      },
+      {
+        "attentionId": "P#r4EQj2yYOgp7_HS#YhQ0E_ecYu4o",
+        "code": "ODG",
+        "description": "Tratamiento / Atención de Odontología General"
+      }
+    ]
+  },
+  {
+    "_id": "AGPswaniOxYB",
+    "date": "2024-04-22",
+    "patientId": "P#y19j596x52GF",
+    "currentCode": "ODG",
+    "possibleMatches": [
+      {
+        "attentionId": "P#y19j596x52GF_HS#nqkBKGu2vEbF",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      },
+      {
+        "attentionId": "P#y19j596x52GF_HS#IBf6mKDi9lRO",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      }
+    ]
+  },
+  {
+    "_id": "WVwbTW4liDGL",
+    "date": "2024-04-23",
+    "patientId": "P#y19j596x52GF",
+    "currentCode": "PRO",
+    "possibleMatches": [
+      {
+        "attentionId": "P#y19j596x52GF_HS#nqkBKGu2vEbF",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      },
+      {
+        "attentionId": "P#y19j596x52GF_HS#IBf6mKDi9lRO",
+        "code": "PRO",
+        "description": "Tratamiento / Atención de Prótesis Dental"
+      }
+    ]
+  }
+]

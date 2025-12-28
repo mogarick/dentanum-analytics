@@ -17,12 +17,17 @@ type Pages = {
   "/original": {
     params: {};
   };
+  "/procedures/:procedureCode": {
+    params: {
+      "procedureCode": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/original";
+    page: "/" | "/original" | "/procedures/:procedureCode";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -32,10 +37,15 @@ type RouteFiles = {
     id: "routes/original";
     page: "/original";
   };
+  "routes/procedure-detail.tsx": {
+    id: "routes/procedure-detail";
+    page: "/procedures/:procedureCode";
+  };
 };
 
 type RouteModules = {
   "root": typeof import("./src/root.tsx");
   "routes/home": typeof import("./src/routes/home.tsx");
   "routes/original": typeof import("./src/routes/original.tsx");
+  "routes/procedure-detail": typeof import("./src/routes/procedure-detail.tsx");
 };

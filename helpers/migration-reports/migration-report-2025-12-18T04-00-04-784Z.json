@@ -1,0 +1,34 @@
+{
+  "migrationId": "procedure-code-sync-2025-12-18",
+  "timestamp": "2025-12-18T04:00:04.784Z",
+  "mode": "dry-run",
+  "summary": {
+    "totalProcessed": 10,
+    "updated": 2,
+    "noMatch": 1,
+    "multipleMatches": 0,
+    "alreadySynced": 7,
+    "errors": 0,
+    "byProcedureCode": {
+      "ODG": {
+        "updated": 1,
+        "noMatch": 0
+      },
+      "PRI": {
+        "updated": 1,
+        "noMatch": 0
+      }
+    }
+  },
+  "noMatchRecords": [
+    {
+      "_id": "VamCZCftYoCk",
+      "date": "2023-05-25",
+      "patientId": "P#L9O7jzLsc0Et",
+      "currentCode": "RES",
+      "reason": "No matching attention found for same patient + same day"
+    }
+  ],
+  "multipleMatchRecords": [],
+  "errors": []
+}
