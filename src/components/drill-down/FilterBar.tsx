@@ -1,15 +1,10 @@
-import { useState } from "react";
 import type { ConciliationStatus } from "../../types/procedureDetail.types";
 
 interface FilterBarProps {
   /** Callback cuando cambia el filtro de estado */
   onStatusChange: (status: ConciliationStatus | "all") => void;
-  /** Callback cuando cambia el texto de búsqueda */
-  onSearchChange: (search: string) => void;
   /** Estado actual seleccionado */
   currentStatus: ConciliationStatus | "all";
-  /** Texto de búsqueda actual */
-  currentSearch: string;
   /** Callback para limpiar todos los filtros */
   onClearFilters: () => void;
 }
@@ -27,24 +22,10 @@ const STATUS_OPTIONS: Array<{ value: ConciliationStatus | "all"; label: string; 
  */
 export function FilterBar({
   onStatusChange,
-  onSearchChange,
   currentStatus,
-  currentSearch,
   onClearFilters,
 }: FilterBarProps) {
-  const [searchInput, setSearchInput] = useState(currentSearch);
-
-  const handleSearchChange = (value: string) => {
-    setSearchInput(value);
-    // Debounce: esperar a que el usuario termine de escribir
-    const timeoutId = setTimeout(() => {
-      onSearchChange(value);
-    }, 300);
-
-    return () => clearTimeout(timeoutId);
-  };
-
-  const hasActiveFilters = currentStatus !== "all" || currentSearch !== "";
+  const hasActiveFilters = currentStatus !== "all";
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
@@ -66,21 +47,6 @@ export function FilterBar({
               </option>
             ))}
           </select>
-        </div>
-
-        {/* Búsqueda por texto */}
-        <div className="flex-1">
-          <label htmlFor="search-filter" className="block text-sm font-medium text-gray-700 mb-2">
-            🔎 Buscar en Notas/Motivos
-          </label>
-          <input
-            id="search-filter"
-            type="text"
-            value={searchInput}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="Ej: dolor, urgencia, revisión..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
         </div>
 
         {/* Botón limpiar filtros */}
@@ -106,16 +72,14 @@ export function FilterBar({
               {STATUS_OPTIONS.find((opt) => opt.value === currentStatus)?.label}
             </span>
           )}
-          {currentSearch && (
-            <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
-              🔎 "{currentSearch}"
-            </span>
-          )}
         </div>
       )}
     </div>
   );
 }
+
+
+
 
 
 

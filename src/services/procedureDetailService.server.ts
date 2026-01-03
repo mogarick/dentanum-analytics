@@ -1,6 +1,6 @@
 import { getMongoClient } from "../utils/mongodb.server";
 import { extractPatientId, anonymizePatientId, calculateAge } from "../utils/patientUtils";
-import { formatTime, calculateTimeDifference, isSameDay } from "../utils/dateUtils";
+import { formatTime, calculateTimeDifference, isSameDay, isWithinTimeWindow, calculateTimeDifferenceHours } from "../utils/dateUtils";
 import type {
   ProcedureDetailFilters,
   AttentionRecord,
@@ -70,7 +70,7 @@ export async function getAttentions(filters: ProcedureDetailFilters): Promise<At
     // Construir match
     const matchStage: Record<string, unknown> = {
       ownerAccount: OWNER_ACCOUNT,
-      recordType: "HealthStory",
+      recordType: "HealthcareStory",
       "recordTypeCategory.code": "HSMainSubject",
       "recordTypeSubcategory.code": filters.procedureCode,
       startDate: { $ne: null },
@@ -239,12 +239,26 @@ export async function getSales(filters: ProcedureDetailFilters): Promise<SaleRec
 function determineConciliationStatus(
   hasAttention: boolean,
   hasSale: boolean,
-  timeDiffMinutes?: number
+  timeDiffMinutes?: number,
+  timeDiffHours?: number
 ): ConciliationStatus {
   if (!hasAttention) return "sale-only";
   if (!hasSale) return "attention-only";
   
-  // Ambos existen
+  // Ambos existen - usar horas si está disponible, sino minutos
+  if (timeDiffHours !== undefined) {
+    const absHours = Math.abs(timeDiffHours);
+    
+    // Perfect Match: -3h a +3h (registro inmediato/casi inmediato)
+    if (absHours <= 3) {
+      return "perfect-match";
+    }
+    
+    // Likely Match: -24h a -3h o +3h a +72h (pago adelantado o diferido)
+    return "likely-match";
+  }
+  
+  // Fallback a lógica anterior con minutos
   if (timeDiffMinutes === undefined) return "likely-match";
   
   const threeHoursInMinutes = 3 * 60;
@@ -269,21 +283,22 @@ export function consolidateRecords(
   for (const attention of attentions) {
     const attentionDate = new Date(attention.startDate);
     
-    // Buscar venta del mismo paciente en el mismo día
+    // Buscar venta del mismo paciente dentro de la ventana de tiempo (-24h a +72h)
     const matchingSale = sales.find((sale) => {
       if (matchedSaleIds.has(sale._id)) return false;
       
       const samePatient = sale.patientId === attention.patientId;
-      const sameDay = isSameDay(sale.date, attention.startDate);
+      const withinWindow = isWithinTimeWindow(sale.date, attention.startDate);
       
-      return samePatient && sameDay;
+      return samePatient && withinWindow;
     });
 
     if (matchingSale) {
       matchedSaleIds.add(matchingSale._id);
       
       const timeDiff = calculateTimeDifference(attention.startDate, matchingSale.date);
-      const status = determineConciliationStatus(true, true, timeDiff);
+      const timeDiffHours = calculateTimeDifferenceHours(matchingSale.date, attention.startDate);
+      const status = determineConciliationStatus(true, true, timeDiff, timeDiffHours);
 
       consolidated.push({
         id: `${attention._id}_${matchingSale._id}`,

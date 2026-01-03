@@ -54,6 +54,45 @@ export function isSameDay(date1: Date | string, date2: Date | string): boolean {
 }
 
 /**
+ * Verifica si una fecha de venta está dentro de la ventana de tiempo de una atención
+ * Ventana: -24 horas (pago adelantado) a +72 horas (pago diferido)
+ * 
+ * @param saleDate - Fecha de la venta/cargo
+ * @param attentionDate - Fecha de la atención
+ * @returns true si la venta está dentro de la ventana de tiempo
+ */
+export function isWithinTimeWindow(saleDate: Date | string, attentionDate: Date | string): boolean {
+  const sale = typeof saleDate === "string" ? new Date(saleDate) : saleDate;
+  const attention = typeof attentionDate === "string" ? new Date(attentionDate) : attentionDate;
+
+  if (isNaN(sale.getTime()) || isNaN(attention.getTime())) {
+    return false;
+  }
+
+  const diffMs = sale.getTime() - attention.getTime();
+  const diffHours = diffMs / (1000 * 60 * 60);
+
+  // Ventana: -24 horas a +72 horas
+  return diffHours >= -24 && diffHours <= 72;
+}
+
+/**
+ * Calcula la diferencia en horas entre dos fechas (puede ser negativa)
+ * @returns Diferencia en horas (negativa si date1 es antes que date2)
+ */
+export function calculateTimeDifferenceHours(date1: Date | string, date2: Date | string): number {
+  const d1 = typeof date1 === "string" ? new Date(date1) : date1;
+  const d2 = typeof date2 === "string" ? new Date(date2) : date2;
+
+  if (isNaN(d1.getTime()) || isNaN(d2.getTime())) {
+    return 0;
+  }
+
+  const diffMs = d1.getTime() - d2.getTime();
+  return diffMs / (1000 * 60 * 60);
+}
+
+/**
  * Formatea una fecha a formato ISO date (YYYY-MM-DD)
  */
 export function formatISODate(date: Date | string): string {
@@ -69,6 +108,9 @@ export function formatISODate(date: Date | string): string {
   
   return `${year}-${month}-${day}`;
 }
+
+
+
 
 
 

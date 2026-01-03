@@ -1,10 +1,47 @@
 import { useParams, useSearchParams, Link, useLoaderData } from "react-router";
 import { useState, useMemo } from "react";
-import type { ConsolidatedResponse, ConciliationStatus } from "../types/procedureDetail.types";
+import type { ConsolidatedResponse, ConciliationStatus, ConsolidatedRecord } from "../types/procedureDetail.types";
 import { RecordListItem } from "./RecordListItem";
 import { FilterBar } from "./FilterBar";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { getTreatmentDescription } from "../../utils/treatmentCatalog";
+
+// Helper para agrupar registros por fecha
+function groupRecordsByDate(records: ConsolidatedRecord[]): Map<string, ConsolidatedRecord[]> {
+  const grouped = new Map<string, ConsolidatedRecord[]>();
+  
+  records.forEach((record) => {
+    const dateKey = record.date.toISOString().split('T')[0]; // YYYY-MM-DD
+    if (!grouped.has(dateKey)) {
+      grouped.set(dateKey, []);
+    }
+    grouped.get(dateKey)!.push(record);
+  });
+  
+  // Ordenar las fechas de más reciente a más antigua
+  return new Map([...grouped.entries()].sort((a, b) => b[0].localeCompare(a[0])));
+}
+
+// Helper para formatear fecha como header
+function formatDateHeader(dateStr: string): string {
+  const date = new Date(dateStr + 'T00:00:00');
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  // Comparar solo las fechas (sin hora)
+  const dateOnly = date.toISOString().split('T')[0];
+  const todayOnly = today.toISOString().split('T')[0];
+  const yesterdayOnly = yesterday.toISOString().split('T')[0];
+  
+  if (dateOnly === todayOnly) {
+    return `Hoy - ${date.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+  } else if (dateOnly === yesterdayOnly) {
+    return `Ayer - ${date.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+  } else {
+    return date.toLocaleDateString('es-MX', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+}
 
 export const ProcedureDetailPage = () => {
   // Obtener datos del loader
@@ -21,7 +58,6 @@ export const ProcedureDetailPage = () => {
 
   // Estados para filtros locales (client-side)
   const [statusFilter, setStatusFilter] = useState<ConciliationStatus | "all">("all");
-  const [searchText, setSearchText] = useState("");
   const [displayCount, setDisplayCount] = useState(20); // Mostrar 20 registros inicialmente
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -50,28 +86,23 @@ export const ProcedureDetailPage = () => {
       filtered = filtered.filter((record) => record.conciliationStatus === statusFilter);
     }
 
-    // Filtrar por búsqueda de texto
-    if (searchText.trim() !== "") {
-      const searchLower = searchText.toLowerCase();
-      filtered = filtered.filter((record) => {
-        const noteMatch = record.attention?.note?.toLowerCase().includes(searchLower);
-        const reasonMatch = record.attention?.reason?.toLowerCase().includes(searchLower);
-        return noteMatch || reasonMatch;
-      });
-    }
-
     return filtered;
-  }, [data.records, statusFilter, searchText]);
+  }, [data.records, statusFilter]);
 
   // Registros a mostrar (con infinite scroll)
   const displayedRecords = useMemo(() => {
     // Si hay filtros activos, mostrar todos los resultados filtrados
-    if (statusFilter !== "all" || searchText.trim() !== "") {
+    if (statusFilter !== "all") {
       return filteredRecords;
     }
     // Si no hay filtros, aplicar infinite scroll
     return filteredRecords.slice(0, displayCount);
-  }, [filteredRecords, displayCount, statusFilter, searchText]);
+  }, [filteredRecords, displayCount, statusFilter]);
+
+  // Agrupar registros mostrados por fecha
+  const groupedRecords = useMemo(() => {
+    return groupRecordsByDate(displayedRecords);
+  }, [displayedRecords]);
 
   // Callback para cargar más registros
   const loadMoreRecords = () => {
@@ -87,7 +118,7 @@ export const ProcedureDetailPage = () => {
   };
 
   // Hook de infinite scroll
-  const hasMoreToLoad = displayCount < filteredRecords.length && statusFilter === "all" && !searchText;
+  const hasMoreToLoad = displayCount < filteredRecords.length && statusFilter === "all";
   const { observerRef } = useInfiniteScroll({
     onLoadMore: loadMoreRecords,
     hasMore: hasMoreToLoad,
@@ -99,13 +130,8 @@ export const ProcedureDetailPage = () => {
     setStatusFilter(status);
   };
 
-  const handleSearchChange = (search: string) => {
-    setSearchText(search);
-  };
-
   const handleClearFilters = () => {
     setStatusFilter("all");
-    setSearchText("");
     setDisplayCount(20); // Reset display count
   };
 
@@ -168,9 +194,7 @@ export const ProcedureDetailPage = () => {
         {/* Barra de filtros */}
         <FilterBar
           currentStatus={statusFilter}
-          currentSearch={searchText}
           onStatusChange={handleStatusChange}
-          onSearchChange={handleSearchChange}
           onClearFilters={handleClearFilters}
         />
 
@@ -201,7 +225,7 @@ export const ProcedureDetailPage = () => {
                   ? "Intenta ajustar los filtros de fecha o selecciona otro procedimiento."
                   : "Intenta ajustar o limpiar los filtros para ver más resultados."}
               </p>
-              {(statusFilter !== "all" || searchText) && (
+              {statusFilter !== "all" && (
                 <button
                   onClick={handleClearFilters}
                   className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -212,8 +236,31 @@ export const ProcedureDetailPage = () => {
             </div>
           ) : (
             <>
-              {displayedRecords.map((record) => (
-                <RecordListItem key={record.id} record={record} />
+              {/* Renderizar registros agrupados por fecha */}
+              {Array.from(groupedRecords.entries()).map(([dateKey, records]) => (
+                <div key={dateKey} className="space-y-4">
+                  {/* Sticky Date Header */}
+                  <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg shadow-md">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📅</span>
+                      <div>
+                        <h3 className="text-lg font-bold">
+                          {formatDateHeader(dateKey)}
+                        </h3>
+                        <p className="text-sm text-blue-100">
+                          {records.length} {records.length === 1 ? 'registro' : 'registros'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Registros del día */}
+                  <div className="space-y-4">
+                    {records.map((record) => (
+                      <RecordListItem key={record.id} record={record} />
+                    ))}
+                  </div>
+                </div>
               ))}
 
               {/* Elemento observador para infinite scroll */}
@@ -230,7 +277,7 @@ export const ProcedureDetailPage = () => {
               {!hasMoreToLoad && displayedRecords.length > 0 && (
                 <div className="bg-white rounded-lg shadow-sm p-6 text-center">
                   <p className="text-sm text-gray-600">
-                    {statusFilter === "all" && !searchText ? (
+                    {statusFilter === "all" ? (
                       <>
                         ✅ Mostrando todos los <strong>{displayedRecords.length}</strong> registros
                         {data.pagination.hasMore && (
